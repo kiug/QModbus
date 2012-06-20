@@ -49,4 +49,5 @@ namespace Modbus
         unsigned int addr;
     };
 };
+
 #endif // QMODBUSREGISTERS_H

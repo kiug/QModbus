@@ -3,11 +3,20 @@
 
 #include <QtTest/QTest>
 #include <QDebug>
+#include <windows.h>
 
 using namespace Modbus;
 
 TestQModbus::TestQModbus(QObject *parent) : QObject(parent)
 {
+    //modbus = new QModbus (IP, PORT, this);
+    //modbus->setDebug (true);
+    //modbus->connect ();
+}
+
+TestQModbus::~TestQModbus()
+{
+    //modbus->close();
 }
 
 void TestQModbus::testConnection ()
@@ -20,6 +29,14 @@ void TestQModbus::testConnection ()
 
 void TestQModbus::bitsTest ()
 {
+    //Sleep (1000);
+    QModbus modbus (IP, PORT);
+    modbus.setDebug (true);
+    modbus.connect ();
+    modbus.close ();
+
+    //testConnection ();
+    /*
     QModbus modbus (IP, PORT);
     modbus.setDebug (true);
     qDebug() << "Connecting...";
@@ -143,10 +160,34 @@ void TestQModbus::bitsTest ()
             << bits.getValue (15);
 
     modbus.close();
+    */
 }
 
 void TestQModbus::registersTest ()
 {
+    //Sleep (1000);
+    QModbus modbus (IP, PORT);
+    modbus.setDebug (true);
+    try
+    {
+        modbus.connect ();
+    }
+    catch (...)
+    {
+        qDebug() << "modbus.connect ();";
+        throw;
+    }
+    try
+    {
+        modbus.close ();
+    }
+    catch (...)
+    {
+        qDebug() << "modbus.close ();";
+        throw;
+    }
+    //testConnection ();
+    /*
     QModbus modbus (IP, PORT);
     modbus.setDebug (true);
     modbus.connect ();
@@ -245,5 +286,5 @@ void TestQModbus::registersTest ()
     }
     QCOMPARE (regs.getUInteger64 (0), (long long unsigned int)18446744073709551615ULL);
 
-    modbus.close();
+    modbus.close();*/
 }

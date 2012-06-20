@@ -21,4 +21,5 @@ namespace Modbus
         unsigned int addr;
     };
 };
+
 #endif // QMODBUSBITS_H

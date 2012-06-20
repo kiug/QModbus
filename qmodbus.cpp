@@ -1,5 +1,6 @@
 #include "modbus.h"
 #include "qmodbus.h"
+#include "qmodbuserror.h"
 #include "qmodbusbits.h"
 #include "qmodbusregisters.h"
 #include <stdexcept>
@@ -11,32 +12,46 @@ QModbus::QModbus (const char *ip, int port, QObject* parent)
 {
     ctx = (modbus_t *) modbus_new_tcp (ip, port);
     checkContext ((modbus_t *) ctx);
+    modbusError = new QModbusError;
 }
 
 QModbus::QModbus (const char *device, int baud, char parity, int dataBit, int stopBit, QObject* parent) : QObject(parent)
 {
     ctx = (modbus_t *) modbus_new_rtu (device, baud, parity, dataBit, stopBit);
     checkContext ((modbus_t *) ctx);
+    modbusError = new QModbusError;
 }
 
 QModbus::QModbus (const char *node, const char *service, QObject* parent) : QObject(parent)
 {
     ctx = (modbus_t *) modbus_new_tcp_pi (node, service);
     checkContext ((modbus_t *) ctx);
+    modbusError = new QModbusError;
 }
 
 QModbus::~QModbus ()
 {
     close ();
     modbus_free ((modbus_t *) ctx);
+    delete modbusError;
+}
+
+QModbusError QModbus::lastError ()
+{
+    return *modbusError;
 }
 
 void QModbus::setSlave (int slave)
 {
     if (modbus_set_slave ((modbus_t *) ctx, slave) != 0)
     {
+        modbusError->set (errno);
         qErrnoWarning (errno, modbus_strerror (errno));
         throw std::invalid_argument::invalid_argument (modbus_strerror (errno));
+    }
+    else
+    {
+        modbusError->clear();
     }
 }
 
@@ -44,8 +59,13 @@ void QModbus::setBroadcast()
 {
     if (modbus_set_slave((modbus_t *) ctx, MODBUS_BROADCAST_ADDRESS) != 0)
     {
+        modbusError->set (errno);
         qErrnoWarning (errno, modbus_strerror (errno));
         throw std::invalid_argument::invalid_argument (modbus_strerror (errno));
+    }
+    else
+    {
+        modbusError->clear();
     }
 }
 
@@ -53,8 +73,13 @@ void QModbus::connect ()
 {
     if (modbus_connect ((modbus_t *) ctx) != 0)
     {
+        modbusError->set (errno);
         qErrnoWarning (errno, modbus_strerror (errno));
         throw std::invalid_argument::invalid_argument (modbus_strerror (errno));
+    }
+    else
+    {
+        modbusError->clear();
     }
 }
 
@@ -65,10 +90,15 @@ void QModbus::close()
 
 void QModbus::flush ()
 {
-    if (modbus_flush ((modbus_t *) ctx) >= 0)
+    if (modbus_flush ((modbus_t *) ctx) != 0)
     {
+        modbusError->set (errno);
         qErrnoWarning (errno, modbus_strerror (errno));
         throw std::runtime_error::runtime_error (modbus_strerror (errno));
+    }
+    else
+    {
+        modbusError->clear();
     }
 }
 
@@ -97,8 +127,13 @@ void QModbus::setErrorRecovery (errorRecoveryMode errorRecovery)
 {
     if (!modbus_set_error_recovery ((modbus_t *) ctx, (modbus_error_recovery_mode)errorRecovery))
     {
+        modbusError->set(errno);
         qErrnoWarning (errno, modbus_strerror (errno));
         throw std::invalid_argument::invalid_argument (modbus_strerror (errno));
+    }
+    else
+    {
+        modbusError->clear();
     }
 }
 
@@ -253,8 +288,13 @@ void QModbus::checkContext (void *ctx)
 {
     if (ctx == NULL)
     {
+        modbusError->set (errno);
         qErrnoWarning (errno, modbus_strerror (errno));
         throw std::invalid_argument::invalid_argument (modbus_strerror (errno));
+    }
+    else
+    {
+        modbusError->clear();
     }
 }
 
@@ -262,7 +302,12 @@ void QModbus::checkOperationsReturnValue (int operationsReturnValue)
 {
     if (operationsReturnValue == -1)
     {
+        modbusError->set (errno);
         qErrnoWarning (errno, modbus_strerror (errno));
         throw std::logic_error::logic_error (modbus_strerror (errno));
+    }
+    else
+    {
+        modbusError->clear();
     }
 }

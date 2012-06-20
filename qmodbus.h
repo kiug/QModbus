@@ -9,12 +9,13 @@
 #  define QMODBUSSHARED_EXPORT Q_DECL_IMPORT
 #endif
 
+#include "qmodbuserror.h"
 #include "qmodbusbits.h"
 #include "qmodbusregisters.h"
 
 namespace Modbus
 {
-    class QModbusBit;
+    class QModbusError;
     class QModbusBits;
     class QModbusRegisters;
 
@@ -48,6 +49,7 @@ namespace Modbus
         QModbus (const char *device, int baud, char parity, int dataBit, int stopBit, QObject* parent = 0);
         QModbus (const char *node, const char *service, QObject* parent = 0);
         ~QModbus ();
+        QModbusError lastError ();
         void setSlave (int slave);
         void setBroadcast ();
         void connect ();
@@ -106,9 +108,11 @@ namespace Modbus
 
     private:
         void *ctx;
+        QModbusError *modbusError;
         //
         inline void checkContext (void *ctx);
         inline void checkOperationsReturnValue (int returnValue);
     };
 };
+
 #endif // QMODBUS_H

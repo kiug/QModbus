@@ -2,6 +2,7 @@
 #include "testqmodbusbits.h"
 #include "testqmodbusregisters.h"
 #include "testqmodbus.h"
+#include "testqmodbusslave.h"
 
 #include <QtTest/QTest>
 #include <QDebug>
@@ -11,6 +12,9 @@
 
 int main(int argc, char *argv[])
 {
+    TestQModbusSlave testQModbusSlave;
+    testQModbusSlave.start();
+
     TestQModbusBits testQModbusBits;
     QTest::qExec(&testQModbusBits);
     TestQModbusRegisters testQModbusRegisters;
@@ -18,6 +22,7 @@ int main(int argc, char *argv[])
     TestQModbus testQModbus;
     QTest::qExec(&testQModbus);
 
+    testQModbusSlave.stop();
     return 0;
 }
 
