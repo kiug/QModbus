@@ -9,15 +9,18 @@ TEMPLATE = lib
 
 DEFINES += QMODBUS_LIBRARY
 
-SOURCES += qmodbus.cpp \
+SOURCES += \
     qmodbusbits.cpp \
     qmodbusregisters.cpp \
-    qmodbuserror.cpp
+    qmodbuserror.cpp \
+    qmodbusmaster.cpp
 
-HEADERS += qmodbus.h\
+HEADERS +=\
     qmodbusbits.h \
     qmodbusregisters.h \
-    qmodbuserror.h
+    qmodbuserror.h \
+    qmodbusmaster.h \
+    qmodbus.h
 
 CONFIG(debug, debug|release) {
     TARGET = QModbusd

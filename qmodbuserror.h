@@ -1,7 +1,7 @@
 #ifndef QMODBUSERROR_H
 #define QMODBUSERROR_H
 
-#include "qmodbus.h"
+#include "qmodbusmaster.h"
 
 class QString;
 
@@ -9,7 +9,7 @@ namespace Modbus
 {
     class QMODBUSSHARED_EXPORT QModbusError
     {
-        friend class QModbus;
+        friend class QModbusMaster;
     public:
         QModbusError ();
         QModbusError (const QModbusError & other);

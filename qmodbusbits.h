@@ -1,14 +1,14 @@
 #ifndef QMODBUSBITS_H
 #define QMODBUSBITS_H
 
-#include "qmodbus.h"
+#include "qmodbusmaster.h"
 #include <QVector>
 
 namespace Modbus
 {
     class QMODBUSSHARED_EXPORT QModbusBits : public QVector <bool>
     {
-        friend class QModbus;
+        friend class QModbusMaster;
     public:
         QModbusBits (unsigned int address, unsigned int number = 1);
         bool getValue (unsigned int index);

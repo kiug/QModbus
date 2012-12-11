@@ -1,8 +1,9 @@
-#include "qmodbus.h"
+#include "qmodbusmaster.h"
 #include "testqmodbusbits.h"
 #include "testqmodbusregisters.h"
+#include "testqmodbuserror.h"
 #include "testqmodbus.h"
-#include "testqmodbusslave.h"
+//#include "testqmodbusslave.h"
 
 #include <QtTest/QTest>
 #include <QDebug>
@@ -12,17 +13,19 @@
 
 int main(int argc, char *argv[])
 {
-    TestQModbusSlave testQModbusSlave;
-    testQModbusSlave.start();
+    //TestQModbusSlave testQModbusSlave;
+    //testQModbusSlave.start();
 
     TestQModbusBits testQModbusBits;
     QTest::qExec(&testQModbusBits);
     TestQModbusRegisters testQModbusRegisters;
     QTest::qExec(&testQModbusRegisters);
-    TestQModbus testQModbus;
-    QTest::qExec(&testQModbus);
+    TestQModbusError testQModbusError;
+    QTest::qExec(&testQModbusError);
+    TestQModbusMaster testQModbusMaster;
+    QTest::qExec(&testQModbusMaster);
 
-    testQModbusSlave.stop();
+    //testQModbusSlave.stop();
     return 0;
 }
 

@@ -5,11 +5,14 @@ using namespace Modbus;
 
 QModbusError::QModbusError ()
 {
+    error = 0;
+    valid = true;
 }
 
 QModbusError::QModbusError (const QModbusError & other)
 {
     error = other.error;
+    valid = other.valid;
 }
 
 bool QModbusError::isValid ()

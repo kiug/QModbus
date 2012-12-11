@@ -16,11 +16,13 @@ LIBS += -lQModbusd3
 SOURCES += main.cpp \
     testqmodbusbits.cpp \
     testqmodbusregisters.cpp \
-    testqmodbus.cpp \
-    testqmodbusslave.cpp
+    testqmodbusslave.cpp \
+    testqmodbuserror.cpp \
+    testqmodbusmaster.cpp
 
 HEADERS += \
     testqmodbusbits.h \
     testqmodbusregisters.h \
-    testqmodbus.h \
-    testqmodbusslave.h
+    testqmodbusslave.h \
+    testqmodbuserror.h \
+    testqmodbusmaster.h

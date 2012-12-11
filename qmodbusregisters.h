@@ -1,7 +1,7 @@
 #ifndef QMODBUSREGISTERS_H
 #define QMODBUSREGISTERS_H
 
-#include "qmodbus.h"
+#include "qmodbusmaster.h"
 #include <stddef.h>
 #include <QVector>
 
@@ -9,7 +9,7 @@ namespace Modbus
 {
     class QMODBUSSHARED_EXPORT QModbusRegisters : public QVector <quint16>
     {
-        friend class QModbus;
+        friend class QModbusMaster;
     public:
         typedef enum {b1 = 0, b2, b3, b4, b5, b6, b7, b8} bytePosition;
         typedef unsigned char byteOrder2 [2];
