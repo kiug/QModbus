@@ -3,8 +3,10 @@
 
 #include <QtTest/QTest>
 
-void TestQModbusError::testIsValid()
+using namespace Modbus;
+
+void TestQModbusError::testIsValid ()
 {
-    Modbus::QModbusError modbusError;
-    QCOMPARE(modbusError.isValid(), true);
+    QModbusError modbusError;
+    QCOMPARE (modbusError.isValid (), false);
 }

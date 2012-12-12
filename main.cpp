@@ -1,31 +1,27 @@
-#include "qmodbusmaster.h"
+/*
+ * To run this tests MOD_RSSIM (http://www.plcsimulator.org/) is required
+ */
+
 #include "testqmodbusbits.h"
 #include "testqmodbusregisters.h"
 #include "testqmodbuserror.h"
-#include "testqmodbus.h"
-//#include "testqmodbusslave.h"
+#include "testqmodbusmaster.h"
 
 #include <QtTest/QTest>
 #include <QDebug>
 
-#include <iostream>
-#include <cmath>
-
-int main(int argc, char *argv[])
+int main (int argc, char *argv[])
 {
-    //TestQModbusSlave testQModbusSlave;
-    //testQModbusSlave.start();
 
     TestQModbusBits testQModbusBits;
-    QTest::qExec(&testQModbusBits);
+    QTest::qExec (&testQModbusBits);
     TestQModbusRegisters testQModbusRegisters;
-    QTest::qExec(&testQModbusRegisters);
+    QTest::qExec (&testQModbusRegisters);
     TestQModbusError testQModbusError;
-    QTest::qExec(&testQModbusError);
+    QTest::qExec (&testQModbusError);
     TestQModbusMaster testQModbusMaster;
-    QTest::qExec(&testQModbusMaster);
+    QTest::qExec (&testQModbusMaster);
 
-    //testQModbusSlave.stop();
     return 0;
 }
 

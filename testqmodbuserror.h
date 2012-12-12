@@ -7,7 +7,7 @@ class TestQModbusError : public QObject
 {
     Q_OBJECT
 private slots:
-    void testIsValid();
+    void testIsValid ();
 };
 
 #endif // TESTQMODBUSERROR_H

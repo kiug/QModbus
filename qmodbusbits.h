@@ -1,7 +1,9 @@
 #ifndef QMODBUSBITS_H
 #define QMODBUSBITS_H
 
-#include "qmodbusmaster.h"
+#include "qmodbus.h"
+#include "qmodbuserror.h"
+
 #include <QVector>
 
 namespace Modbus
@@ -10,7 +12,7 @@ namespace Modbus
     {
         friend class QModbusMaster;
     public:
-        QModbusBits (unsigned int address, unsigned int number = 1);
+        QModbusBits (unsigned int address = 0, unsigned int number = 1);
         bool getValue (unsigned int index);
         void setValue (unsigned int index, bool value);
         unsigned int getNumber (void);
@@ -19,6 +21,7 @@ namespace Modbus
         void setAddress (unsigned int address);
     private:
         unsigned int addr;
+        QModbusError modbusError;
     };
 };
 

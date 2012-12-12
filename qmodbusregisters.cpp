@@ -1,14 +1,10 @@
 #include "qmodbusregisters.h"
 
-#include <stdexcept>
-
 using namespace Modbus;
-
-#define OUT_OF_RANGE_MSG "Register index out of range"
 
 QModbusRegisters::QModbusRegisters (unsigned int address, unsigned int number) : addr (address)
 {
-    fill(0, number);
+    fill (0, number);
 }
 
 quint16 QModbusRegisters::getValue (unsigned int index)
@@ -45,67 +41,79 @@ QString QModbusRegisters::getBitString (unsigned int index)
 {
     QString bitString;
     unsigned int i;
-    i = 1<<(sizeof(operator [] (index)) * 8 - 1);
+    i = 1 << (sizeof(operator [] (index)) * 8 - 1);
     while (i > 0)
     {
-        if (operator [] (index) & i)
+        if (operator [] (index) & i) {
             bitString.append ("1");
-        else
+        }
+        else {
             bitString.append ("0");
+        }
         i >>= 1;
     }
     return bitString;
 }
 
-short int QModbusRegisters::getInteger16 (unsigned int index)
+qint16 QModbusRegisters::getInteger16 (unsigned int index)
 {
-    if (size() <= (int)index)
-    {
-        throw std::out_of_range::out_of_range (OUT_OF_RANGE_MSG);
+    if (size () <= (int)index) {
+        modbusError.set (OUT_OF_RANGE_ENO);
     }
-    short int value = 0;
+    else {
+        modbusError.clear();
+    }
+    qint16 value = 0;
     ((quint16 *) &value)[0] = at (index);
     return value;
 }
 
-void QModbusRegisters::setInteger16 (unsigned int index, short int value)
+void QModbusRegisters::setInteger16 (unsigned int index, qint16 value)
 {
-    if (size() <= (int)index)
-    {
-        throw std::out_of_range::out_of_range (OUT_OF_RANGE_MSG);
+    if (size () <= (int)index) {
+        modbusError.set (OUT_OF_RANGE_ENO);
+    }
+    else {
+        modbusError.clear();
     }
     operator [] (index) = ((quint16 *) &value)[0];
 }
 
-int QModbusRegisters::getInteger32 (unsigned int index)
+qint32 QModbusRegisters::getInteger32 (unsigned int index)
 {
-    if (size() <= (int)index + 1)
-    {
-        throw std::out_of_range::out_of_range (OUT_OF_RANGE_MSG);
+    if (size () <= (int)index + 1) {
+        modbusError.set (OUT_OF_RANGE_ENO);
     }
-    int value = 0;
+    else {
+        modbusError.clear();
+    }
+    qint32 value = 0;
     ((quint16 *) &value)[0] = at (index);
     ((quint16 *) &value)[1] = at (index + 1);
     return value;
 }
 
-void QModbusRegisters::setInteger32 (unsigned int index, int value)
+void QModbusRegisters::setInteger32 (unsigned int index, qint32 value)
 {
-    if (size() <= (int)index + 1)
-    {
-        throw std::out_of_range::out_of_range (OUT_OF_RANGE_MSG);
+    if (size () <= (int)index + 1) {
+        modbusError.set (OUT_OF_RANGE_ENO);
+    }
+    else {
+        modbusError.clear();
     }
     operator [] (index) = ((quint16 *) &value)[0];
     operator [] (index + 1) = ((quint16 *) &value)[1];
 }
 
-long long int QModbusRegisters::getInteger64 (unsigned int index)
+qint64 QModbusRegisters::getInteger64 (unsigned int index)
 {
-    if (size() <= (int)index + 3)
-    {
-        throw std::out_of_range::out_of_range (OUT_OF_RANGE_MSG);
+    if (size () <= (int)index + 3) {
+        modbusError.set (OUT_OF_RANGE_ENO);
     }
-    long long int value = 0;
+    else {
+        modbusError.clear ();
+    }
+    qint64 value = 0;
     ((quint16 *) &value)[0] = at (index);
     ((quint16 *) &value)[1] = at (index + 1);
     ((quint16 *) &value)[2] = at (index + 2);
@@ -113,11 +121,13 @@ long long int QModbusRegisters::getInteger64 (unsigned int index)
     return value;
 }
 
-void QModbusRegisters::setInteger64 (unsigned int index, long long int value)
+void QModbusRegisters::setInteger64 (unsigned int index, qint64 value)
 {
-    if (size() <= (int)index + 3)
-    {
-        throw std::out_of_range::out_of_range (OUT_OF_RANGE_MSG);
+    if (size () <= (int)index + 3) {
+        modbusError.set (OUT_OF_RANGE_ENO);
+    }
+    else {
+        modbusError.clear ();
     }
     operator [] (index) = ((quint16 *) &value)[0];
     operator [] (index + 1) = ((quint16 *) &value)[1];
@@ -125,55 +135,65 @@ void QModbusRegisters::setInteger64 (unsigned int index, long long int value)
     operator [] (index + 3) = ((quint16 *) &value)[3];
 }
 
-short unsigned int QModbusRegisters::getUInteger16 (unsigned int index)
+quint16 QModbusRegisters::getUInteger16 (unsigned int index)
 {
-    if (size() <= (int)index)
-    {
-        throw std::out_of_range::out_of_range (OUT_OF_RANGE_MSG);
+    if (size () <= (int)index) {
+        modbusError.set (OUT_OF_RANGE_ENO);
     }
-    short unsigned int value = 0;
+    else {
+        modbusError.clear ();
+    }
+    quint16 value = 0;
     ((quint16 *) &value)[0] = at (index);
     return value;
 }
 
-void QModbusRegisters::setUInteger16 (unsigned int index, short unsigned int value)
+void QModbusRegisters::setUInteger16 (unsigned int index, quint16 value)
 {
-    if (size() <= (int)index)
-    {
-        throw std::out_of_range::out_of_range (OUT_OF_RANGE_MSG);
+    if (size () <= (int)index) {
+        modbusError.set (OUT_OF_RANGE_ENO);
+    }
+    else {
+        modbusError.clear ();
     }
     operator [] (index) = ((quint16 *) &value)[0];
 }
 
-unsigned int QModbusRegisters::getUInteger32 (unsigned int index)
+quint32 QModbusRegisters::getUInteger32 (unsigned int index)
 {
-    if (size() <= (int)index + 1)
-    {
-        throw std::out_of_range::out_of_range (OUT_OF_RANGE_MSG);
+    if (size () <= (int)index + 1) {
+        modbusError.set (OUT_OF_RANGE_ENO);
     }
-    unsigned int value = 0;
+    else {
+        modbusError.clear ();
+    }
+    quint32 value = 0;
     ((quint16 *) &value)[0] = at (index);
     ((quint16 *) &value)[1] = at (index + 1);
     return value;
 }
 
-void QModbusRegisters::setUInteger32 (unsigned int index, unsigned int value)
+void QModbusRegisters::setUInteger32 (unsigned int index, quint32 value)
 {
-    if (size() <= (int)index + 1)
-    {
-        throw std::out_of_range::out_of_range (OUT_OF_RANGE_MSG);
+    if (size () <= (int)index + 1) {
+        modbusError.set (OUT_OF_RANGE_ENO);
+    }
+    else {
+        modbusError.clear ();
     }
     operator [] (index) = ((quint16 *) &value)[0];
     operator [] (index + 1) = ((quint16 *) &value)[1];
 }
 
-long long unsigned int QModbusRegisters::getUInteger64 (unsigned int index)
+quint64 QModbusRegisters::getUInteger64 (unsigned int index)
 {
-    if (size() <= (int)index + 3)
-    {
-        throw std::out_of_range::out_of_range (OUT_OF_RANGE_MSG);
+    if (size () <= (int)index + 3) {
+        modbusError.set (OUT_OF_RANGE_ENO);
     }
-    long long unsigned int value = 0;
+    else {
+        modbusError.clear ();
+    }
+    quint64 value = 0;
     ((quint16 *) &value)[0] = at (index);
     ((quint16 *) &value)[1] = at (index + 1);
     ((quint16 *) &value)[2] = at (index + 2);
@@ -181,11 +201,13 @@ long long unsigned int QModbusRegisters::getUInteger64 (unsigned int index)
     return value;
 }
 
-void QModbusRegisters::setUInteger64 (unsigned int index, long long unsigned int value)
+void QModbusRegisters::setUInteger64 (unsigned int index, quint64 value)
 {
-    if (size() <= (int)index + 3)
-    {
-        throw std::out_of_range::out_of_range (OUT_OF_RANGE_MSG);
+    if (size () <= (int)index + 3) {
+        modbusError.set (OUT_OF_RANGE_ENO);
+    }
+    else {
+        modbusError.clear ();
     }
     operator [] (index) = ((quint16 *) &value)[0];
     operator [] (index + 1) = ((quint16 *) &value)[1];
@@ -195,9 +217,11 @@ void QModbusRegisters::setUInteger64 (unsigned int index, long long unsigned int
 
 float QModbusRegisters::getFloat32 (unsigned int index)
 {
-    if (size() <= (int)index + 1)
-    {
-        throw std::out_of_range::out_of_range (OUT_OF_RANGE_MSG);
+    if (size () <= (int)index + 1) {
+        modbusError.set (OUT_OF_RANGE_ENO);
+    }
+    else {
+        modbusError.clear ();
     }
     float value = 0;
     ((quint16 *) &value)[0] = at (index);
@@ -208,9 +232,11 @@ float QModbusRegisters::getFloat32 (unsigned int index)
 
 void QModbusRegisters::setFloat32 (unsigned int index, float value)
 {
-    if (size() <= (int)index + 1)
-    {
-        throw std::out_of_range::out_of_range (OUT_OF_RANGE_MSG);
+    if (size () <= (int)index + 1) {
+        modbusError.set (OUT_OF_RANGE_ENO);
+    }
+    else {
+        modbusError.clear ();
     }
     operator [] (index) = ((quint16 *) &value)[0];
     operator [] (index + 1) = ((quint16 *) &value)[1];
@@ -218,9 +244,11 @@ void QModbusRegisters::setFloat32 (unsigned int index, float value)
 
 double QModbusRegisters::getFloat64 (unsigned int index)
 {
-    if (size() <= (int)index + 3)
-    {
-        throw std::out_of_range::out_of_range (OUT_OF_RANGE_MSG);
+    if (size () <= (int)index + 3) {
+        modbusError.set (OUT_OF_RANGE_ENO);
+    }
+    else {
+        modbusError.clear ();
     }
     double value = 0;
     ((quint16 *) &value)[0] = at (index);
@@ -232,9 +260,11 @@ double QModbusRegisters::getFloat64 (unsigned int index)
 
 void QModbusRegisters::setFloat64 (unsigned int index, double value)
 {
-    if (size() <= (int)index + 3)
-    {
-        throw std::out_of_range::out_of_range (OUT_OF_RANGE_MSG);
+    if (size () <= (int)index + 3) {
+        modbusError.set (OUT_OF_RANGE_ENO);
+    }
+    else {
+        modbusError.clear ();
     }
     operator [] (index) = ((quint16 *) &value)[0];
     operator [] (index + 1) = ((quint16 *) &value)[1];
@@ -242,33 +272,52 @@ void QModbusRegisters::setFloat64 (unsigned int index, double value)
     operator [] (index + 3) = ((quint16 *) &value)[3];
 }
 
-long double QModbusRegisters::getFloat96 (unsigned int index)
+const quint8 QModbusRegisters::getHighByte (quint16 data)
 {
-    if (size() <= (int)index + 5)
-    {
-        throw std::out_of_range::out_of_range (OUT_OF_RANGE_MSG);
-    }
-    long double value = 0;
-    ((quint16 *) &value)[0] = at (index);
-    ((quint16 *) &value)[1] = at (index + 1);
-    ((quint16 *) &value)[2] = at (index + 2);
-    ((quint16 *) &value)[3] = at (index + 3);
-    ((quint16 *) &value)[4] = at (index + 4);
-    ((quint16 *) &value)[5] = at (index + 5);
-    return value;
+    return MODBUS_GET_HIGH_BYTE ((int)data);
 }
 
-void QModbusRegisters::setFloat96 (unsigned int index, long double value)
+const quint8 QModbusRegisters::getLowByte (quint16 data)
 {
-    if (size() <= (int)index + 5)
-    {
-        throw std::out_of_range::out_of_range (OUT_OF_RANGE_MSG);
-    }
-    operator [] (index) = ((quint16 *) &value)[0];
-    operator [] (index + 1) = ((quint16 *) &value)[1];
-    operator [] (index + 2) = ((quint16 *) &value)[2];
-    operator [] (index + 3) = ((quint16 *) &value)[3];
-    operator [] (index + 4) = ((quint16 *) &value)[4];
-    operator [] (index + 5) = ((quint16 *) &value)[5];
+    return MODBUS_GET_LOW_BYTE ((int)data);
 }
 
+const int QModbusRegisters::getInt32FromInt16 (quint16 *data, int index)
+{
+    return MODBUS_GET_INT32_FROM_INT16 (data, index);
+}
+
+const short int QModbusRegisters::getInt16FromInt8 (quint8 *data, int index)
+{
+    return MODBUS_GET_INT16_FROM_INT8 (data, index);
+}
+
+void QModbusRegisters::setInt16ToInt8 (quint8 *data, int index, short int value)
+{
+    MODBUS_SET_INT16_TO_INT8 (data, index, value);
+}
+
+void QModbusRegisters::setBitsFromByte (quint8 *dest, int index, const quint8 value)
+{
+    modbus_set_bits_from_byte (dest, index, value);
+}
+
+void QModbusRegisters::setBitsFromBytes (quint8 *dest, int index, unsigned int nb_bits, const quint8 *tab_byte)
+{
+    modbus_set_bits_from_bytes (dest, index, nb_bits, tab_byte);
+}
+
+void QModbusRegisters::getByteFromBits (const quint8 *src, int index, unsigned int nb_bits)
+{
+    modbus_get_byte_from_bits (src, index, nb_bits);
+}
+
+const float QModbusRegisters::getFloat (const quint16 *src)
+{
+    return modbus_get_float (src);
+}
+
+void QModbusRegisters::setFloat (float value, quint16 *dest)
+{
+    modbus_set_float (value, dest);
+}

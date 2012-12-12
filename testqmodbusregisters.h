@@ -32,18 +32,8 @@ private slots:
     // Float
     void testGetFloat32 ();
     void testGetFloat64 ();
-    void testGetFloat96 ();
     void testSetAndGetFloat32 ();
     void testSetAndGetFloat64 ();
-    void testSetAndGetFloat96 ();
-    //float getFloat16 (unsigned int index);
-    //void setFloat16 (unsigned int index, float value);
-    //float getFloat32 (unsigned int index);
-    //void setFloat32 (unsigned int index, float value);
-    //double getFloat64 (unsigned int index);
-    //void setFloat64 (unsigned int index, double value);
-    //long double getFloat96 (unsigned int index);
-    //void setFloat96 (unsigned int index, long double value);
 };
 
 #endif // TESTQMODBUSREGISTERS_H

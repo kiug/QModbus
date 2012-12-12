@@ -1,12 +1,13 @@
 #include "modbus.h"
 #include "qmodbuserror.h"
 
+#include <QString>
+
 using namespace Modbus;
 
 QModbusError::QModbusError ()
 {
-    error = 0;
-    valid = true;
+    clear ();
 }
 
 QModbusError::QModbusError (const QModbusError & other)
@@ -22,7 +23,12 @@ bool QModbusError::isValid ()
 
 QString QModbusError::message ()
 {
-    return QString (modbus_strerror (error));
+    if (error == MODBUS_ENOBASE-1) {
+        return QString (OUT_OF_RANGE_MSG);
+    }
+    else {
+        return QString (modbus_strerror (error));
+    }
 }
 
 void QModbusError::set (int errnum)
