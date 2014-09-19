@@ -3,15 +3,16 @@
 
 #include <QObject>
 
-#include "modbus.h"
 #include "qmodbus.h"
+
+#define MODBUS_ENOBASE 112345678
+#define OUT_OF_RANGE_ENO (MODBUS_ENOBASE-1)
+#define OUT_OF_RANGE_MSG "Register index out of range"
 
 class QString;
 
 namespace Modbus
 {
-    #define OUT_OF_RANGE_ENO (MODBUS_ENOBASE-1)
-    #define OUT_OF_RANGE_MSG "Register index out of range"
     class QMODBUSSHARED_EXPORT QModbusError
     {
         friend class QModbusMaster;

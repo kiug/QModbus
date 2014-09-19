@@ -1,6 +1,5 @@
 #include "modbus.h"
 #include "qmodbuserror.h"
-
 #include <QString>
 
 using namespace Modbus;

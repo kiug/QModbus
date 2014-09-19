@@ -1,0 +1,16 @@
+#DIR = "D:/DEV/libs/QModbus"
+DIR = "D:/DEV/projects/QModbus-build-desktop/release"
+VERSION = 3.0.3
+
+INCLUDEPATH += $${DIR}/include/
+LIBS += -L$${DIR}/lib
+
+CONFIG(debug, debug|release) {
+		LIBS += -lQModbusd3
+}
+else {		
+		LIBS += -lQModbus3
+
+        QMAKE_CXXFLAGS += -fno-strict-aliasing
+        #LFLAGS += -static-libgcc
+}

@@ -1,4 +1,5 @@
 #include "qmodbusregisters.h"
+#include "modbus.h"
 
 using namespace Modbus;
 

@@ -13,11 +13,12 @@ DESTDIR = ../QModbus-build-desktop/debug
 LIBS += -L"../QModbus-build-desktop/debug"
 LIBS += -lQModbusd3
 
-SOURCES += main.cpp \
+SOURCES += \
     testqmodbusbits.cpp \
     testqmodbusregisters.cpp \
     testqmodbuserror.cpp \
-    testqmodbusmaster.cpp
+    testqmodbusmaster.cpp \
+    qmodbustest.cpp
 
 HEADERS += \
     testqmodbusbits.h \
