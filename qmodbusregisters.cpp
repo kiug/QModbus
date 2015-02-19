@@ -273,22 +273,22 @@ void QModbusRegisters::setFloat64 (unsigned int index, double value)
     operator [] (index + 3) = ((quint16 *) &value)[3];
 }
 
-const quint8 QModbusRegisters::getHighByte (quint16 data)
+quint8 QModbusRegisters::getHighByte(quint16 data)
 {
     return MODBUS_GET_HIGH_BYTE ((int)data);
 }
 
-const quint8 QModbusRegisters::getLowByte (quint16 data)
+quint8 QModbusRegisters::getLowByte (quint16 data)
 {
     return MODBUS_GET_LOW_BYTE ((int)data);
 }
 
-const int QModbusRegisters::getInt32FromInt16 (quint16 *data, int index)
+int QModbusRegisters::getInt32FromInt16 (quint16 *data, int index)
 {
     return MODBUS_GET_INT32_FROM_INT16 (data, index);
 }
 
-const short int QModbusRegisters::getInt16FromInt8 (quint8 *data, int index)
+short QModbusRegisters::getInt16FromInt8(quint8 *data, int index)
 {
     return MODBUS_GET_INT16_FROM_INT8 (data, index);
 }
@@ -313,7 +313,7 @@ void QModbusRegisters::getByteFromBits (const quint8 *src, int index, unsigned i
     modbus_get_byte_from_bits (src, index, nb_bits);
 }
 
-const float QModbusRegisters::getFloat (const quint16 *src)
+float QModbusRegisters::getFloat(const quint16 *src)
 {
     return modbus_get_float (src);
 }

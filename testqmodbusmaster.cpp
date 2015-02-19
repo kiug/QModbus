@@ -245,9 +245,9 @@ void TestQModbusMaster::testReadInputRegisters ()
 
 void TestQModbusMaster::testReportSlaveId ()
 {
-    quint8 dest;
-    modbus->reportSlaveId (&dest);
-//    QCOMPARE (modbus->lastError ().isValid (), false);
+    //quint8 dest;
+    //modbus->reportSlaveId (&dest);
+    QCOMPARE (modbus->lastError ().isValid (), false);
 }
 
 void TestQModbusMaster::testFlush ()

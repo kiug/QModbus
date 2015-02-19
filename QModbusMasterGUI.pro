@@ -1,19 +1,16 @@
-QT       += core gui
+QT += core gui widgets
 
 TARGET = modbus_master
 TEMPLATE = app
 
 CONFIG += QModbus
 
-DESTDIR = ../QModbus-build-desktop/release
+DESTDIR = ../QModbus_BIN
 
-#LIBS += -L"../../QModbus-build-desktop/release"
-#LIBS += -lQModbus3
-
-SOURCES +=\
-        mainwindow.cpp \
+SOURCES += \
+    mainwindow.cpp \
     qmodbusmastergui.cpp
 
-HEADERS  += mainwindow.h
+HEADERS += mainwindow.h
 
-FORMS    += mainwindow.ui
+FORMS += mainwindow.ui

@@ -1,13 +1,12 @@
-# http://taat.pl/artykuly/git-po-polsku/
-
 QT -= gui
 
 CONFIG += libmodbus
 
-#TARGET = QModbus
 TEMPLATE = lib
 
 DEFINES += QMODBUS_LIBRARY
+
+DESTDIR = ../QModbus_BIN
 
 SOURCES += \
     qmodbusbits.cpp \
@@ -15,7 +14,7 @@ SOURCES += \
     qmodbuserror.cpp \
     qmodbusmaster.cpp
 
-HEADERS +=\
+HEADERS += \
     qmodbusbits.h \
     qmodbusregisters.h \
     qmodbuserror.h \

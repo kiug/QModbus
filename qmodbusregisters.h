@@ -47,17 +47,17 @@ namespace Modbus
         void setFloat64 (unsigned int index, double value);
 
         // Macros for data manipulation
-        inline static const quint8 getHighByte (quint16 data);// extracts the high byte from a byte
-        inline static const quint8 getLowByte (quint16 data);// extracts the low byte from a byte
-        inline static const int getInt32FromInt16 (quint16 *data, int index);// builds an int32 from the two first int16 starting at tab_int16[index]
-        inline static const short int getInt16FromInt8 (quint8 *data, int index);// builds an int16 from the two first int8 starting at tab_int8[index]
+        inline static quint8 getHighByte (quint16 data);// extracts the high byte from a byte
+        inline static quint8 getLowByte (quint16 data);// extracts the low byte from a byte
+        inline static int getInt32FromInt16 (quint16 *data, int index);// builds an int32 from the two first int16 starting at tab_int16[index]
+        inline static short int getInt16FromInt8 (quint8 *data, int index);// builds an int16 from the two first int8 starting at tab_int8[index]
         inline static void setInt16ToInt8 (quint8 *data, int index, short int value);// set an int16 value into the two first bytes starting at tab_int8[index]
 
         // Functions for data manipulation
         inline static void setBitsFromByte (quint8 *dest, int index, const quint8 value);
         inline static void setBitsFromBytes (quint8 *dest, int index, unsigned int nb_bits, const quint8 *tab_byte);
         inline static void getByteFromBits (const quint8 *src, int index, unsigned int nb_bits);
-        inline static const float getFloat (const quint16 *src);
+        inline static float getFloat (const quint16 *src);
         inline static void setFloat (float value, quint16 *dest);
 
     private:

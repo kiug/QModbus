@@ -12,7 +12,8 @@
 
 int main (int argc, char *argv[])
 {
-
+    Q_UNUSED (argc);
+    Q_UNUSED (argv);
     TestQModbusBits testQModbusBits;
     QTest::qExec (&testQModbusBits);
     TestQModbusRegisters testQModbusRegisters;

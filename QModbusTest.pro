@@ -1,17 +1,9 @@
-# http://taat.pl/artykuly/git-po-polsku/
+QT += widgets testlib
 
-TEMPLATE = app
-QT -= gui
-
-CONFIG += console
-CONFIG -= app_bundle
-CONFIG  += qtestlib
 CONFIG += libmodbus
 
-DESTDIR = ../QModbus-build-desktop/debug
-
-LIBS += -L"../QModbus-build-desktop/debug"
-LIBS += -lQModbusd3
+LIBS += -L"../QModbus_BIN"
+LIBS += -lQModbus3
 
 SOURCES += \
     testqmodbusbits.cpp \
