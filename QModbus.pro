@@ -5,6 +5,7 @@ CONFIG += libmodbus
 TEMPLATE = lib
 
 DEFINES += QMODBUS_LIBRARY
+#-Ilibmodbus
 
 DESTDIR = ../QModbus_BIN
 

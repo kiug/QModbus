@@ -8,6 +8,8 @@
 #define MODBUS_ENOBASE 112345678
 #define OUT_OF_RANGE_ENO (MODBUS_ENOBASE-1)
 #define OUT_OF_RANGE_MSG "Register index out of range"
+#define NOT_CONNECTED_ENO (MODBUS_ENOBASE-2)
+#define NOT_CONNECTED_MSG "Not connected to slave"
 
 class QString;
 

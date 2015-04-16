@@ -19,7 +19,7 @@ namespace Modbus
         QModbusError & lastError ();
         void setSlave (int slave);
         void setBroadcast ();
-        void connect ();
+        bool connect();
         void close ();
         void flush ();
 
@@ -51,8 +51,10 @@ namespace Modbus
     private:
         void *ctx;
         QModbusError modbusError;
+        bool connected;
         //
         inline void checkContext (void *ctx);
+        inline bool checkConnection ();
         inline void checkOperationsReturnValue (int returnValue);
     };
 };

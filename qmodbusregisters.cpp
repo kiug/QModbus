@@ -3,6 +3,20 @@
 
 using namespace Modbus;
 
+union twoRegistersRepresentation {
+    quint16 component[2];
+    quint32 uint32;
+    qint32 int32;
+    float float32;
+};
+
+union fourRegistersRepresentation {
+    quint16 component[4];
+    quint64 uint64;
+    qint64 int64;
+    double float64;
+};
+
 QModbusRegisters::QModbusRegisters (unsigned int address, unsigned int number) : addr (address)
 {
     fill (0, number);
@@ -88,10 +102,10 @@ qint32 QModbusRegisters::getInteger32 (unsigned int index)
     else {
         modbusError.clear();
     }
-    qint32 value = 0;
-    ((quint16 *) &value)[0] = at (index);
-    ((quint16 *) &value)[1] = at (index + 1);
-    return value;
+    twoRegistersRepresentation valueRep;
+    valueRep.component[0] = at (index);
+    valueRep.component[1] = at (index + 1);
+    return valueRep.int32;
 }
 
 void QModbusRegisters::setInteger32 (unsigned int index, qint32 value)
@@ -102,8 +116,10 @@ void QModbusRegisters::setInteger32 (unsigned int index, qint32 value)
     else {
         modbusError.clear();
     }
-    operator [] (index) = ((quint16 *) &value)[0];
-    operator [] (index + 1) = ((quint16 *) &value)[1];
+    twoRegistersRepresentation valueRep;
+    valueRep.int32 = value;
+    operator [] (index) = valueRep.component[0];
+    operator [] (index + 1) = valueRep.component[1];
 }
 
 qint64 QModbusRegisters::getInteger64 (unsigned int index)
@@ -114,12 +130,12 @@ qint64 QModbusRegisters::getInteger64 (unsigned int index)
     else {
         modbusError.clear ();
     }
-    qint64 value = 0;
-    ((quint16 *) &value)[0] = at (index);
-    ((quint16 *) &value)[1] = at (index + 1);
-    ((quint16 *) &value)[2] = at (index + 2);
-    ((quint16 *) &value)[3] = at (index + 3);
-    return value;
+    fourRegistersRepresentation valueRep;
+    valueRep.component[0] = at (index);
+    valueRep.component[1] = at (index + 1);
+    valueRep.component[2] = at (index + 2);
+    valueRep.component[3] = at (index + 3);
+    return valueRep.int64;
 }
 
 void QModbusRegisters::setInteger64 (unsigned int index, qint64 value)
@@ -130,10 +146,12 @@ void QModbusRegisters::setInteger64 (unsigned int index, qint64 value)
     else {
         modbusError.clear ();
     }
-    operator [] (index) = ((quint16 *) &value)[0];
-    operator [] (index + 1) = ((quint16 *) &value)[1];
-    operator [] (index + 2) = ((quint16 *) &value)[2];
-    operator [] (index + 3) = ((quint16 *) &value)[3];
+    fourRegistersRepresentation valueRep;
+    valueRep.int64 = value;
+    operator [] (index) = valueRep.component[0];
+    operator [] (index + 1) = valueRep.component[1];
+    operator [] (index + 2) = valueRep.component[2];
+    operator [] (index + 3) = valueRep.component[3];
 }
 
 quint16 QModbusRegisters::getUInteger16 (unsigned int index)
@@ -168,10 +186,10 @@ quint32 QModbusRegisters::getUInteger32 (unsigned int index)
     else {
         modbusError.clear ();
     }
-    quint32 value = 0;
-    ((quint16 *) &value)[0] = at (index);
-    ((quint16 *) &value)[1] = at (index + 1);
-    return value;
+    twoRegistersRepresentation valueRep;
+    valueRep.component[0] = at (index);
+    valueRep.component[1] = at (index + 1);
+    return valueRep.uint32;
 }
 
 void QModbusRegisters::setUInteger32 (unsigned int index, quint32 value)
@@ -182,8 +200,10 @@ void QModbusRegisters::setUInteger32 (unsigned int index, quint32 value)
     else {
         modbusError.clear ();
     }
-    operator [] (index) = ((quint16 *) &value)[0];
-    operator [] (index + 1) = ((quint16 *) &value)[1];
+    twoRegistersRepresentation valueRep;
+    valueRep.uint32 = value;
+    operator [] (index) = valueRep.component[0];
+    operator [] (index + 1) = valueRep.component[1];
 }
 
 quint64 QModbusRegisters::getUInteger64 (unsigned int index)
@@ -194,12 +214,12 @@ quint64 QModbusRegisters::getUInteger64 (unsigned int index)
     else {
         modbusError.clear ();
     }
-    quint64 value = 0;
-    ((quint16 *) &value)[0] = at (index);
-    ((quint16 *) &value)[1] = at (index + 1);
-    ((quint16 *) &value)[2] = at (index + 2);
-    ((quint16 *) &value)[3] = at (index + 3);
-    return value;
+    fourRegistersRepresentation valueRep;
+    valueRep.component[0] = at (index);
+    valueRep.component[1] = at (index + 1);
+    valueRep.component[2] = at (index + 2);
+    valueRep.component[3] = at (index + 3);
+    return valueRep.uint64;
 }
 
 void QModbusRegisters::setUInteger64 (unsigned int index, quint64 value)
@@ -210,10 +230,12 @@ void QModbusRegisters::setUInteger64 (unsigned int index, quint64 value)
     else {
         modbusError.clear ();
     }
-    operator [] (index) = ((quint16 *) &value)[0];
-    operator [] (index + 1) = ((quint16 *) &value)[1];
-    operator [] (index + 2) = ((quint16 *) &value)[2];
-    operator [] (index + 3) = ((quint16 *) &value)[3];
+    fourRegistersRepresentation valueRep;
+    valueRep.uint64 = value;
+    operator [] (index) = valueRep.component[0];
+    operator [] (index + 1) = valueRep.component[1];
+    operator [] (index + 2) = valueRep.component[2];
+    operator [] (index + 3) = valueRep.component[3];
 }
 
 float QModbusRegisters::getFloat32 (unsigned int index)
@@ -224,11 +246,10 @@ float QModbusRegisters::getFloat32 (unsigned int index)
     else {
         modbusError.clear ();
     }
-    float value = 0;
-    ((quint16 *) &value)[0] = at (index);
-    ((quint16 *) &value)[1] = at (index + 1);
-
-    return value;
+    twoRegistersRepresentation valueRep;
+    valueRep.component[0] = at (index);
+    valueRep.component[1] = at (index + 1);
+    return valueRep.float32;
 }
 
 void QModbusRegisters::setFloat32 (unsigned int index, float value)
@@ -239,8 +260,10 @@ void QModbusRegisters::setFloat32 (unsigned int index, float value)
     else {
         modbusError.clear ();
     }
-    operator [] (index) = ((quint16 *) &value)[0];
-    operator [] (index + 1) = ((quint16 *) &value)[1];
+    twoRegistersRepresentation valueRep;
+    valueRep.float32 = value;
+    operator [] (index) = valueRep.component[0];
+    operator [] (index + 1) = valueRep.component[1];
 }
 
 double QModbusRegisters::getFloat64 (unsigned int index)
@@ -251,12 +274,12 @@ double QModbusRegisters::getFloat64 (unsigned int index)
     else {
         modbusError.clear ();
     }
-    double value = 0;
-    ((quint16 *) &value)[0] = at (index);
-    ((quint16 *) &value)[1] = at (index + 1);
-    ((quint16 *) &value)[2] = at (index + 2);
-    ((quint16 *) &value)[3] = at (index + 3);
-    return value;
+    fourRegistersRepresentation valueRep;
+    valueRep.component[0] = at (index);
+    valueRep.component[1] = at (index + 1);
+    valueRep.component[2] = at (index + 2);
+    valueRep.component[3] = at (index + 3);
+    return valueRep.float64;
 }
 
 void QModbusRegisters::setFloat64 (unsigned int index, double value)
@@ -267,10 +290,12 @@ void QModbusRegisters::setFloat64 (unsigned int index, double value)
     else {
         modbusError.clear ();
     }
-    operator [] (index) = ((quint16 *) &value)[0];
-    operator [] (index + 1) = ((quint16 *) &value)[1];
-    operator [] (index + 2) = ((quint16 *) &value)[2];
-    operator [] (index + 3) = ((quint16 *) &value)[3];
+    fourRegistersRepresentation valueRep;
+    valueRep.float64 = value;
+    operator [] (index) = valueRep.component[0];
+    operator [] (index + 1) = valueRep.component[1];
+    operator [] (index + 2) = valueRep.component[2];
+    operator [] (index + 3) = valueRep.component[3];
 }
 
 quint8 QModbusRegisters::getHighByte(quint16 data)

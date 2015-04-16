@@ -22,8 +22,11 @@ bool QModbusError::isValid ()
 
 QString QModbusError::message ()
 {
-    if (error == MODBUS_ENOBASE-1) {
+    if (error == OUT_OF_RANGE_ENO) {
         return QString (OUT_OF_RANGE_MSG);
+    }
+    else if (error == NOT_CONNECTED_ENO) {
+        return QString (NOT_CONNECTED_MSG);
     }
     else {
         return QString (modbus_strerror (error));
