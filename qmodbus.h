@@ -1,3 +1,10 @@
+/****************************************************************************
+**
+** SPDX-License-Identifier: GPL-3.0-or-later
+** SPDX-FileCopyrightText: 2012 - present, Karol Drożak <karoldro@gmail.com>
+**
+****************************************************************************/
+
 #ifndef QMODBUS_H
 #define QMODBUS_H
 

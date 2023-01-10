@@ -1,6 +1,13 @@
+/****************************************************************************
+**
+** SPDX-License-Identifier: GPL-3.0-or-later
+** SPDX-FileCopyrightText: 2012 - present, Karol Drożak <karoldro@gmail.com>
+**
+****************************************************************************/
+
 /*
- * To run this tests MOD_RSSIM (http://www.plcsimulator.org/) is required
- */
+** To run this tests MOD_RSSIM (http://www.plcsimulator.org/) is required
+**/
 
 #include "testqmodbusbits.h"
 #include "testqmodbusregisters.h"
