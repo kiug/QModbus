@@ -1,11 +1,10 @@
 QT -= gui
 
-CONFIG += libmodbus
+CONFIG += libmodbus-3.1.10
 
 TEMPLATE = lib
 
 DEFINES += QMODBUS_LIBRARY
-#-Ilibmodbus
 
 DESTDIR = ../QModbus_BIN
 
@@ -28,3 +27,7 @@ CONFIG(debug, debug|release) {
 else {
     TARGET = QModbus
 }
+
+DISTFILES += \
+    QModbus.prf \
+    libmodbus-3.1.10.prf

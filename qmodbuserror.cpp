@@ -5,7 +5,7 @@
 **
 ****************************************************************************/
 
-#include "modbus.h"
+#include <modbus/modbus.h>
 #include "qmodbuserror.h"
 #include <QString>
 

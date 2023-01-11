@@ -31,13 +31,13 @@ namespace Modbus
         void flush ();
 
         //Context setters and getters
-        void getByteTimeout (long *sec, long *usec);
-        void setByteTimeout (long sec, long usec);
+        void getByteTimeout (uint32_t *sec, uint32_t *usec);
+        void setByteTimeout (uint32_t sec, uint32_t usec);
         void setDebug (bool debug);
         void setErrorRecovery (errorRecoveryMode errorRecovery);
         int getHeaderLength (void);
-        void getResponseTimeout (long *sec, long *usec);
-        void setResponseTimeout (long sec, long usec);
+        void getResponseTimeout (uint32_t *sec, uint32_t *usec);
+        void setResponseTimeout (uint32_t sec, uint32_t usec);
 
         // Read data
         void readBits (QModbusBits &bits);

@@ -3,7 +3,9 @@ QT += widgets testlib
 CONFIG += libmodbus
 
 LIBS += -L"../QModbus_BIN"
-LIBS += -lQModbus3
+LIBS += -lQModbus
+
+DESTDIR = ../QModbus_BIN
 
 SOURCES += \
     testqmodbusbits.cpp \

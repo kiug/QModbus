@@ -5,7 +5,7 @@
 **
 ****************************************************************************/
 
-#include "modbus.h"
+#include <modbus/modbus.h>
 #include "qmodbusmaster.h"
 #include "qmodbuserror.h"
 #include "qmodbusbits.h"
@@ -97,20 +97,14 @@ void QModbusMaster::flush ()
     }
 }
 
-void QModbusMaster::getByteTimeout (long *sec, long *usec)
+void QModbusMaster::getByteTimeout (uint32_t *sec, uint32_t *usec)
 {
-    struct timeval timeout;
-    modbus_get_byte_timeout ((modbus_t *) ctx, &timeout);
-    *sec = timeout.tv_sec;
-    *usec = timeout.tv_usec;
+    modbus_get_byte_timeout ((modbus_t *) ctx, sec, usec);
 }
 
-void QModbusMaster::setByteTimeout (long sec, long usec)
+void QModbusMaster::setByteTimeout (uint32_t sec, uint32_t usec)
 {
-    struct timeval timeout;
-    timeout.tv_sec = sec;
-    timeout.tv_usec = usec;
-    modbus_set_byte_timeout ((modbus_t *) ctx, &timeout);
+    modbus_set_byte_timeout ((modbus_t *) ctx, sec, usec);
 }
 
 void QModbusMaster::setDebug (bool debug)
@@ -134,20 +128,14 @@ int QModbusMaster::getHeaderLength (void)
     return modbus_get_header_length ((modbus_t *) ctx);
 }
 
-void QModbusMaster::getResponseTimeout (long *sec, long *usec)
+void QModbusMaster::getResponseTimeout (uint32_t *sec, uint32_t *usec)
 {
-    struct timeval timeout;
-    modbus_get_response_timeout ((modbus_t *) ctx, &timeout);
-    *sec = timeout.tv_sec;
-    *usec = timeout.tv_usec;
+    modbus_get_response_timeout ((modbus_t *) ctx, sec, usec);
 }
 
-void QModbusMaster::setResponseTimeout (long sec, long usec)
+void QModbusMaster::setResponseTimeout (uint32_t sec, uint32_t usec)
 {
-    struct timeval timeout;
-    timeout.tv_sec = sec;
-    timeout.tv_usec = usec;
-    modbus_set_response_timeout ((modbus_t *) ctx, &timeout);
+    modbus_set_response_timeout ((modbus_t *) ctx, sec, usec);
 }
 
 void QModbusMaster::readBits (QModbusBits &bits)
@@ -181,7 +169,7 @@ void QModbusMaster::readInputRegisters (QModbusRegisters &regs)
 void QModbusMaster::reportSlaveId (quint8 *dest)
 {
     if(checkConnection()) {
-        checkOperationsReturnValue (modbus_report_slave_id ((modbus_t *) ctx, dest));
+        checkOperationsReturnValue (modbus_report_slave_id ((modbus_t *) ctx, 1, dest));
     }
 }
 
