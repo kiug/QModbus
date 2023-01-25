@@ -22,7 +22,7 @@ namespace Modbus
         QModbusMaster (const char *ip, int port, QObject* parent = 0);
         QModbusMaster (const char *device, int baud, char parity, int dataBit, int stopBit, QObject* parent = 0);
         QModbusMaster (const char *node, const char *service, QObject* parent = 0);
-        ~QModbusMaster () override;
+        ~QModbusMaster ();
         /*! Returns currently set modbus error, updated in last API call. */
         inline const QModbusError & lastError () const { return modbusError; }
         /*! Sets the slave ID. */
