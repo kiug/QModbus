@@ -22,47 +22,56 @@ namespace Modbus
         QModbusMaster (const char *ip, int port, QObject* parent = 0);
         QModbusMaster (const char *device, int baud, char parity, int dataBit, int stopBit, QObject* parent = 0);
         QModbusMaster (const char *node, const char *service, QObject* parent = 0);
-        ~QModbusMaster ();
-        QModbusError & lastError ();
-        void setSlave (int slave);
-        void setBroadcast ();
+        ~QModbusMaster () override;
+        /*! Returns currently set modbus error, updated in last API call. */
+        inline const QModbusError & lastError () const { return modbusError; }
+        /*! Sets the slave ID. */
+        bool setSlave (int slave);
+        bool setBroadcast ();
         bool connect();
         void close ();
-        void flush ();
+        bool flush();
 
         //Context setters and getters
-        void getByteTimeout (uint32_t *sec, uint32_t *usec);
-        void setByteTimeout (uint32_t sec, uint32_t usec);
-        void setDebug (bool debug);
-        void setErrorRecovery (errorRecoveryMode errorRecovery);
+        bool getByteTimeout (uint32_t *sec, uint32_t *usec);
+        bool setByteTimeout(uint32_t sec, uint32_t usec);
+        bool setDebug(bool debug);
+        bool setErrorRecovery (errorRecoveryMode errorRecovery);
         int getHeaderLength (void);
-        void getResponseTimeout (uint32_t *sec, uint32_t *usec);
-        void setResponseTimeout (uint32_t sec, uint32_t usec);
+        bool getResponseTimeout(uint32_t *sec, uint32_t *usec);
+        bool setResponseTimeout(uint32_t sec, uint32_t usec);
 
         // Read data
-        void readBits (QModbusBits &bits);
-        void readInputBits (QModbusBits &bits);
-        void readRegisters (QModbusRegisters &regs);
-        void readInputRegisters (QModbusRegisters &regs);
-        void reportSlaveId (quint8 *dest);
+        bool readBits(QModbusBits &bits);
+        bool readInputBits(QModbusBits &bits);
+        bool readRegisters(QModbusRegisters &regs);
+        bool readInputRegisters(QModbusRegisters &regs);
+        bool reportSlaveId(quint8 *dest);
 
         // Write data
-        void writeBit (QModbusBits &bit);
-        void writeRegister (QModbusRegisters &reg);
-        void writeBits (QModbusBits &bits);
-        void writeRegisters (QModbusRegisters &regs);
+        bool writeBit(QModbusBits &bit);
+        bool writeRegister(QModbusRegisters &reg);
+        bool writeBits(QModbusBits &bits);
+        bool writeRegisters(QModbusRegisters &regs);
 
         // Write and read data
-        void writeAndReadRegisters (QModbusRegisters &writeRegs, QModbusRegisters &readRegs);
+        bool writeAndReadRegisters(QModbusRegisters &writeRegs, QModbusRegisters &readRegs);
 
     private:
         void *ctx;
         QModbusError modbusError;
         bool connected;
-        //
-        inline void checkContext (void *ctx);
-        inline bool checkConnection ();
-        inline void checkOperationsReturnValue (int returnValue);
+        /*! Checks for errno set by libmodus and configures modbusError accordingly. */
+        void checkContext (void *ctx);
+        /*! Checks if connection is established. If connected clears last error and returns true,
+            otherwise returns false and sets last error to NOT_CONNECTED_ENO.
+        */
+        bool checkConnection ();
+        /*! Checks if return value is != 0, and if so, sets the errno set by libmodbus and its message
+            as last modbusError.
+            \return Returns true, if returnValue == 0, or false, if != 0 (error).
+        */
+        bool checkOperationsReturnValue(int returnValue);
     };
 };
 
