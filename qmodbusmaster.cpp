@@ -40,173 +40,139 @@ QModbusMaster::~QModbusMaster ()
     modbus_free ((modbus_t *) ctx);
 }
 
-QModbusError & QModbusMaster::lastError ()
+bool QModbusMaster::setSlave (int slave)
 {
-    return modbusError;
+    return checkOperationsReturnValue( modbus_set_slave ((modbus_t *) ctx, slave) != 0 );
 }
 
-void QModbusMaster::setSlave (int slave)
+bool QModbusMaster::setBroadcast ()
 {
-    if (modbus_set_slave ((modbus_t *) ctx, slave) != 0) {
-        modbusError.set (errno);
-        qErrnoWarning (errno, modbus_strerror (errno));
-    }
-    else {
-        modbusError.clear ();
-    }
-}
-
-void QModbusMaster::setBroadcast ()
-{
-    if (modbus_set_slave((modbus_t *) ctx, MODBUS_BROADCAST_ADDRESS) != 0) {
-        modbusError.set (errno);
-        qErrnoWarning (errno, modbus_strerror (errno));
-    }
-    else {
-        modbusError.clear ();
-    }
+    return checkOperationsReturnValue( modbus_set_slave((modbus_t *) ctx, MODBUS_BROADCAST_ADDRESS) != 0 );
 }
 
 bool QModbusMaster::connect ()
 {
-    if (modbus_connect ((modbus_t *) ctx) != 0) {
-        modbusError.set (errno);
-        qErrnoWarning (errno, modbus_strerror (errno));
-        connected = false;
-    }
-    else {
-        modbusError.clear ();
-        connected = true;
-    }
-    return connected;
+    return checkOperationsReturnValue( modbus_connect ((modbus_t *) ctx) != 0 );
 }
 
 void QModbusMaster::close()
 {
     modbus_close ((modbus_t *) ctx);
+    modbusError.clear ();
 }
 
-void QModbusMaster::flush ()
+bool QModbusMaster::flush ()
 {
-    if (modbus_flush ((modbus_t *) ctx) != 0) {
-        modbusError.set (errno);
-        qErrnoWarning (errno, modbus_strerror (errno));
-    }
-    else {
-        modbusError.clear ();
-    }
+    return checkOperationsReturnValue( modbus_flush ((modbus_t *) ctx) != 0 );
 }
 
-void QModbusMaster::getByteTimeout (uint32_t *sec, uint32_t *usec)
+bool QModbusMaster::getByteTimeout (uint32_t *sec, uint32_t *usec)
 {
-    modbus_get_byte_timeout ((modbus_t *) ctx, sec, usec);
+    return checkOperationsReturnValue( modbus_get_byte_timeout ((modbus_t *) ctx, sec, usec) != 0 );
 }
 
-void QModbusMaster::setByteTimeout (uint32_t sec, uint32_t usec)
+bool QModbusMaster::setByteTimeout (uint32_t sec, uint32_t usec)
 {
-    modbus_set_byte_timeout ((modbus_t *) ctx, sec, usec);
+    return checkOperationsReturnValue( modbus_set_byte_timeout ((modbus_t *) ctx, sec, usec) != 0 );
 }
 
-void QModbusMaster::setDebug (bool debug)
+bool QModbusMaster::setDebug (bool debug)
 {
-    modbus_set_debug ((modbus_t *) ctx, (int)debug);
+    return checkOperationsReturnValue( modbus_set_debug ((modbus_t *) ctx, (int)debug) != 0 );
 }
 
-void QModbusMaster::setErrorRecovery (errorRecoveryMode errorRecovery)
+bool QModbusMaster::setErrorRecovery(errorRecoveryMode errorRecovery)
 {
-    if (!modbus_set_error_recovery ((modbus_t *) ctx, (modbus_error_recovery_mode)errorRecovery)) {
-        modbusError.set (errno);
-        qErrnoWarning (errno, modbus_strerror (errno));
-    }
-    else {
-        modbusError.clear ();
-    }
+    return checkOperationsReturnValue( modbus_set_error_recovery ((modbus_t *) ctx, (modbus_error_recovery_mode)errorRecovery) );
 }
 
 int QModbusMaster::getHeaderLength (void)
 {
+    // function simply returns data from ctx, as we ensure that ctx is always there and never nullptr,
+    // this call cannot fail
     return modbus_get_header_length ((modbus_t *) ctx);
 }
 
-void QModbusMaster::getResponseTimeout (uint32_t *sec, uint32_t *usec)
+bool QModbusMaster::getResponseTimeout (uint32_t *sec, uint32_t *usec)
 {
-    modbus_get_response_timeout ((modbus_t *) ctx, sec, usec);
+    return checkOperationsReturnValue( modbus_get_response_timeout ((modbus_t *) ctx, sec, usec) );
 }
 
-void QModbusMaster::setResponseTimeout (uint32_t sec, uint32_t usec)
+bool QModbusMaster::setResponseTimeout (uint32_t sec, uint32_t usec)
 {
-    modbus_set_response_timeout ((modbus_t *) ctx, sec, usec);
+    return checkOperationsReturnValue( modbus_set_response_timeout ((modbus_t *) ctx, sec, usec) );
 }
 
-void QModbusMaster::readBits (QModbusBits &bits)
+bool QModbusMaster::readBits (QModbusBits &bits)
 {
-    if(checkConnection()) {
-        checkOperationsReturnValue (modbus_read_bits ((modbus_t *) ctx, bits.addr, bits.size (), (quint8 *)bits.data ()));
-    }
+    if (!checkConnection())
+        return false;
+    return checkOperationsReturnValue (modbus_read_bits ((modbus_t *) ctx, bits.addr, bits.size (), (quint8 *)bits.data ()));
 }
 
-void QModbusMaster::readInputBits (QModbusBits &bits)
+bool QModbusMaster::readInputBits (QModbusBits &bits)
 {
-    if(checkConnection()) {
-        checkOperationsReturnValue (modbus_read_input_bits ((modbus_t *) ctx, bits.addr, bits.size (), (quint8 *)bits.data ()));
-    }
+    if (!checkConnection())
+        return false;
+    return checkOperationsReturnValue (modbus_read_input_bits ((modbus_t *) ctx, bits.addr, bits.size (), (quint8 *)bits.data ()));
 }
 
-void QModbusMaster::readRegisters (QModbusRegisters &regs)
+bool QModbusMaster::readRegisters (QModbusRegisters &regs)
 {
-    if(checkConnection()) {
-        checkOperationsReturnValue (modbus_read_registers ((modbus_t *) ctx, regs.addr, regs.size (), regs.data ()));
-    }
+    if (!checkConnection())
+        return false;
+    return checkOperationsReturnValue (modbus_read_registers ((modbus_t *) ctx, regs.addr, regs.size (), regs.data ()));
 }
 
-void QModbusMaster::readInputRegisters (QModbusRegisters &regs)
+bool QModbusMaster::readInputRegisters (QModbusRegisters &regs)
 {
-    if(checkConnection()) {
-        checkOperationsReturnValue (modbus_read_input_registers ((modbus_t *) ctx, regs.addr, regs.size (), regs.data ()));
-    }
+    if (!checkConnection())
+        return false;
+    return checkOperationsReturnValue (modbus_read_input_registers ((modbus_t *) ctx, regs.addr, regs.size (), regs.data ()));
 }
 
-void QModbusMaster::reportSlaveId (quint8 *dest)
+bool QModbusMaster::reportSlaveId (quint8 *dest)
 {
-    if(checkConnection()) {
-        checkOperationsReturnValue (modbus_report_slave_id ((modbus_t *) ctx, 1, dest));
-    }
+    if (!checkConnection())
+        return false;
+    return checkOperationsReturnValue (modbus_report_slave_id ((modbus_t *) ctx, 1, dest));
 }
 
-void QModbusMaster::writeBit (QModbusBits &bit)
+bool QModbusMaster::writeBit (QModbusBits &bit)
 {
-    if(checkConnection()) {
-        checkOperationsReturnValue (modbus_write_bit ((modbus_t *) ctx, bit.addr, bit.data ()[0]));
-    }
+    if (!checkConnection())
+        return false;
+    return checkOperationsReturnValue (modbus_write_bit ((modbus_t *) ctx, bit.addr, bit.data ()[0]));
 }
 
-void QModbusMaster::writeRegister (QModbusRegisters &reg)
+bool QModbusMaster::writeRegister (QModbusRegisters &reg)
 {
-    if(checkConnection()) {
-        checkOperationsReturnValue (modbus_write_register ((modbus_t *) ctx, reg.addr, (unsigned int)(reg.data ()[0])));
-    }
+    if (!checkConnection())
+        return false;
+    return checkOperationsReturnValue (modbus_write_register ((modbus_t *) ctx, reg.addr, (unsigned int)(reg.data ()[0])));
 }
 
-void QModbusMaster::writeBits (QModbusBits &bits)
+bool QModbusMaster::writeBits (QModbusBits &bits)
 {
-    if(checkConnection()) {
-        checkOperationsReturnValue (modbus_write_bits ((modbus_t *) ctx, bits.addr, bits.size(), (quint8 *)bits.data ()));
-    }
+    if (!checkConnection())
+        return false;
+    return checkOperationsReturnValue (modbus_write_bits ((modbus_t *) ctx, bits.addr, bits.size(), (quint8 *)bits.data ()));
 }
 
-void QModbusMaster::writeRegisters (QModbusRegisters &regs)
+bool QModbusMaster::writeRegisters (QModbusRegisters &regs)
 {
-    if(checkConnection()) {
-        checkOperationsReturnValue (modbus_write_registers ((modbus_t *) ctx, regs.addr, regs.size(), regs.data ()));
-    }
+    if (!checkConnection())
+        return false;
+    return checkOperationsReturnValue (modbus_write_registers ((modbus_t *) ctx, regs.addr, regs.size(), regs.data ()));
 }
 
-void QModbusMaster::writeAndReadRegisters (QModbusRegisters &writeRegs, QModbusRegisters &readRegs)
+bool QModbusMaster::writeAndReadRegisters (QModbusRegisters &writeRegs, QModbusRegisters &readRegs)
 {
-    if(checkConnection()) {
-        checkOperationsReturnValue (modbus_write_and_read_registers ((modbus_t *) ctx, writeRegs.addr, writeRegs.size (), writeRegs.data (), readRegs.addr, readRegs.size (), readRegs.data ()));
-    }
+    if (!checkConnection())
+        return false;
+    return checkOperationsReturnValue (modbus_write_and_read_registers ((modbus_t *) ctx, writeRegs.addr, writeRegs.size (), writeRegs.data (), readRegs.addr, readRegs.size (), readRegs.data ()));
 }
+
 
 // private
 void QModbusMaster::checkContext (void *ctx)
@@ -231,13 +197,14 @@ bool QModbusMaster::checkConnection ()
     return connected;
 }
 
-void QModbusMaster::checkOperationsReturnValue (int operationsReturnValue)
+bool QModbusMaster::checkOperationsReturnValue (int operationsReturnValue)
 {
     if (operationsReturnValue == -1) {
         modbusError.set (errno);
+        // TODO : think about using qcWarning() instead, to be able to filter out messages by context
         qErrnoWarning (errno, modbus_strerror (errno));
+        return false;
     }
-    else {
-        modbusError.clear ();
-    }
+    modbusError.clear ();
+    return true;
 }
