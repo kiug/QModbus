@@ -30,7 +30,7 @@ namespace Modbus
     public:
         QModbusError ();
         QModbusError (const QModbusError & other);
-        bool isValid ();
+        bool isValid () const;
         QString message ();
     private:
         void set (int errnum);

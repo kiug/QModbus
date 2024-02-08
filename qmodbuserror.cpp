@@ -22,7 +22,7 @@ QModbusError::QModbusError (const QModbusError & other)
     valid = other.valid;
 }
 
-bool QModbusError::isValid ()
+bool QModbusError::isValid () const
 {
     return valid;
 }

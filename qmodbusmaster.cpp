@@ -11,7 +11,7 @@
 #include "qmodbusbits.h"
 #include "qmodbusregisters.h"
 
-#include <QDebug>
+#include <QLoggingCategory>
 
 using namespace Modbus;
 
@@ -52,7 +52,9 @@ bool QModbusMaster::setBroadcast ()
 
 bool QModbusMaster::connect ()
 {
-    return checkOperationsReturnValue( modbus_connect ((modbus_t *) ctx) != 0 );
+    const int returnValue = modbus_connect ((modbus_t *) ctx);
+    connected = returnValue != 0 ? false : true;
+    return checkOperationsReturnValue(returnValue);
 }
 
 void QModbusMaster::close()
@@ -173,7 +175,6 @@ bool QModbusMaster::writeAndReadRegisters (QModbusRegisters &writeRegs, QModbusR
     return checkOperationsReturnValue (modbus_write_and_read_registers ((modbus_t *) ctx, writeRegs.addr, writeRegs.size (), writeRegs.data (), readRegs.addr, readRegs.size (), readRegs.data ()));
 }
 
-
 // private
 void QModbusMaster::checkContext (void *ctx)
 {
@@ -201,8 +202,8 @@ bool QModbusMaster::checkOperationsReturnValue (int operationsReturnValue)
 {
     if (operationsReturnValue == -1) {
         modbusError.set (errno);
-        // TODO : think about using qcWarning() instead, to be able to filter out messages by context
-        qErrnoWarning (errno, modbus_strerror (errno));
+        QLoggingCategory category("QModbus");
+        qCWarning (category, "%s (%d)", modbus_strerror (errno), errno);
         return false;
     }
     modbusError.clear ();
