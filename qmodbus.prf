@@ -1,14 +1,14 @@
-#DIR = "D:/DEV/libs/QModbus"
+# Copy to D:/Qt/Qt5.12.12/5.12.12/mingw73_32/mkspecs/features
+# In *.pro file add CONFIG += libmodbus-3.1.10
 DIR = "D:/Qt/Projects/QModbus_BIN"
 
 INCLUDEPATH += $${DIR}/include/
 LIBS += -L$${DIR} -L$${DIR}/lib
 
 CONFIG(debug, debug|release) {
-		LIBS += -lQModbusd
+    LIBS += -lQModbusd
 }
 else {		
-		LIBS += -lQModbus
-        QMAKE_CXXFLAGS += -fno-strict-aliasing
-        #LFLAGS += -static-libgcc
+    LIBS += -lQModbus
+    QMAKE_CXXFLAGS += -fno-strict-aliasing
 }

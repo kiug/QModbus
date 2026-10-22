@@ -1,3 +1,5 @@
 *~
 *.user
 *.swp
+build
+.qtcreator
