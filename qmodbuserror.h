@@ -12,16 +12,18 @@
 
 #include "qmodbus.h"
 
-#define MODBUS_ENOBASE 112345678
-#define OUT_OF_RANGE_ENO (MODBUS_ENOBASE-1)
-#define OUT_OF_RANGE_MSG "Register index out of range"
-#define NOT_CONNECTED_ENO (MODBUS_ENOBASE-2)
-#define NOT_CONNECTED_MSG "Not connected to slave"
-
 class QString;
 
 namespace Modbus
 {
+    // Offset for QModbus-specific error codes, chosen far above typical errno
+    // values to avoid collisions with libmodbus errors.
+    enum : int {
+        QMODBUS_ENOBASE = 112345678,
+        OUT_OF_RANGE_ENO = QMODBUS_ENOBASE - 1,
+        NOT_CONNECTED_ENO = QMODBUS_ENOBASE - 2
+    };
+
     class QMODBUSSHARED_EXPORT QModbusError
     {
         friend class QModbusMaster;

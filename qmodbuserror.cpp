@@ -27,10 +27,10 @@ QString QModbusError::message () const
         return QString ();
     }
     if (error == OUT_OF_RANGE_ENO) {
-        return QStringLiteral (OUT_OF_RANGE_MSG);
+        return QStringLiteral ("Register index out of range");
     }
     else if (error == NOT_CONNECTED_ENO) {
-        return QStringLiteral (NOT_CONNECTED_MSG);
+        return QStringLiteral ("Not connected to slave");
     }
     else {
         return QString (modbus_strerror (error));
