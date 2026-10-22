@@ -32,6 +32,8 @@ namespace Modbus
         void setNumber (unsigned int number);
         unsigned int getAddress (void);
         void setAddress (unsigned int address);
+        /*! Returns currently set modbus error, updated in last API call. */
+        inline const QModbusError & lastError () const { return modbusError; }
         QString getBitString (unsigned int index);
         // Integer
         qint16 getInteger16 (unsigned int index);

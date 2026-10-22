@@ -26,6 +26,8 @@ namespace Modbus
         void setNumber (unsigned int number);
         unsigned int getAddress (void);
         void setAddress (unsigned int address);
+        /*! Returns currently set modbus error, updated in last API call. */
+        inline const QModbusError & lastError () const { return modbusError; }
     private:
         unsigned int addr;
         QModbusError modbusError;

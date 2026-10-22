@@ -268,8 +268,13 @@ void TestQModbusRegisters::testOutOfRange ()
     registers.setFloat32 (0, 1.0f);
     registers.setFloat64 (0, 1.0);
     QCOMPARE (registers.getValue (1), (quint16)0);
+    QVERIFY (registers.lastError ().isValid ());
+    QCOMPARE (registers.lastError ().message (), QString ("Register index out of range"));
     QCOMPARE (registers.getBitString (1), QString ());
     registers.setValue (1, 0xFFFF);
+    QVERIFY (registers.lastError ().isValid ());
+    QCOMPARE (registers.getValue (0), (quint16)0);
+    QVERIFY (!registers.lastError ().isValid ());
 }
 
 void TestQModbusRegisters::testGetHighAndLowByte ()

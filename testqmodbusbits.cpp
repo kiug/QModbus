@@ -59,5 +59,10 @@ void TestQModbusBits::testOutOfRange ()
 {
     Modbus::QModbusBits bits (0, 1);
     QCOMPARE (bits.getValue (1), false);
+    QVERIFY (bits.lastError ().isValid ());
+    QCOMPARE (bits.lastError ().message (), QString ("Register index out of range"));
     bits.setValue (1, true); // must not crash
+    QVERIFY (bits.lastError ().isValid ());
+    QCOMPARE (bits.getValue (0), false);
+    QVERIFY (!bits.lastError ().isValid ());
 }
