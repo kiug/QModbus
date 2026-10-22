@@ -48,13 +48,15 @@ void MainWindow::connectToDevice()
             .arg(ui->ipOct3LineEdit->text())
             .arg(ui->ipOct4LineEdit->text());
         const int port = ui->portLineEdit->text().toInt();
-        modbus = new QModbusMaster(ip.toLatin1().constData(), port, this);
+        const QByteArray ipBytes = ip.toLatin1();
+        modbus = new QModbusMaster(ipBytes.constData(), port, this);
     }
     else {
         // RTU
         const char parity = "NEO"[ui->parityComboBox->currentIndex()];
+        const QByteArray device = ui->serialPortLineEdit->text().toLatin1();
         modbus = new QModbusMaster(
-            ui->serialPortLineEdit->text().toLatin1().constData(),
+            device.constData(),
             ui->baudComboBox->currentText().toInt(),
             parity,
             ui->dataBitsComboBox->currentText().toInt(),
@@ -75,7 +77,7 @@ void MainWindow::sendQuery()
     }
 
     const int address = ui->addressSpinBox->value();
-    const int number = ui->numberSpinBox->value();
+    const int number = qMin(ui->numberSpinBox->value(), 125);
 
     ui->resultTableWidget->clear();
     ui->resultTableWidget->setRowCount(0);
