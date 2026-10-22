@@ -18,11 +18,21 @@ QModbusRegisters::QModbusRegisters (unsigned int address, unsigned int number) :
 
 quint16 QModbusRegisters::getValue (unsigned int index)
 {
+    if (size () <= (int)index) {
+        modbusError.set (OUT_OF_RANGE_ENO);
+        return 0;
+    }
+    modbusError.clear ();
     return operator [] (index);
 }
 
 void QModbusRegisters::setValue (unsigned int index, quint16 value)
 {
+    if (size () <= (int)index) {
+        modbusError.set (OUT_OF_RANGE_ENO);
+        return;
+    }
+    modbusError.clear ();
     operator [] (index) = value;
 }
 
@@ -48,17 +58,16 @@ void QModbusRegisters::setAddress (unsigned int address)
 
 QString QModbusRegisters::getBitString (unsigned int index)
 {
+    if (size () <= (int)index) {
+        modbusError.set (OUT_OF_RANGE_ENO);
+        return QString ();
+    }
+    modbusError.clear ();
     QString bitString;
-    unsigned int i;
-    i = 1 << (sizeof(operator [] (index)) * 8 - 1);
+    unsigned int i = 1 << (sizeof (quint16) * 8 - 1);
     while (i > 0)
     {
-        if (operator [] (index) & i) {
-            bitString.append ("1");
-        }
-        else {
-            bitString.append ("0");
-        }
+        bitString.append ((operator [] (index) & i) ? "1" : "0");
         i >>= 1;
     }
     return bitString;

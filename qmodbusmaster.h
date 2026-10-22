@@ -46,7 +46,7 @@ namespace Modbus
         bool readInputBits(QModbusBits &bits);
         bool readRegisters(QModbusRegisters &regs);
         bool readInputRegisters(QModbusRegisters &regs);
-        bool reportSlaveId(quint8 *dest);
+        bool reportSlaveId(quint8 *dest, int maxDest);
 
         // Write data
         bool writeBit(QModbusBits &bit);

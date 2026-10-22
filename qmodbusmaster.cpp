@@ -91,8 +91,10 @@ bool QModbusMaster::setErrorRecovery(errorRecoveryMode errorRecovery)
 
 int QModbusMaster::getHeaderLength (void)
 {
-    // function simply returns data from ctx, as we ensure that ctx is always there and never nullptr,
-    // this call cannot fail
+    if (ctx == NULL) {
+        modbusError.set (EINVAL);
+        return -1;
+    }
     return modbus_get_header_length ((modbus_t *) ctx);
 }
 
@@ -134,11 +136,11 @@ bool QModbusMaster::readInputRegisters (QModbusRegisters &regs)
     return checkOperationsReturnValue (modbus_read_input_registers ((modbus_t *) ctx, regs.addr, regs.size (), regs.data ()));
 }
 
-bool QModbusMaster::reportSlaveId (quint8 *dest)
+bool QModbusMaster::reportSlaveId (quint8 *dest, int maxDest)
 {
     if (!checkConnection())
         return false;
-    return checkOperationsReturnValue (modbus_report_slave_id ((modbus_t *) ctx, 1, dest));
+    return checkOperationsReturnValue (modbus_report_slave_id ((modbus_t *) ctx, maxDest, dest));
 }
 
 bool QModbusMaster::writeBit (QModbusBits &bit)

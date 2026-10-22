@@ -16,11 +16,21 @@ QModbusBits::QModbusBits (unsigned int address, unsigned int number) : addr (add
 
 bool QModbusBits::getValue (unsigned int index)
 {
+    if (size () <= (int)index) {
+        modbusError.set (OUT_OF_RANGE_ENO);
+        return false;
+    }
+    modbusError.clear ();
     return operator[](index);
 }
 
 void QModbusBits::setValue (unsigned int index, bool value)
 {
+    if (size () <= (int)index) {
+        modbusError.set (OUT_OF_RANGE_ENO);
+        return;
+    }
+    modbusError.clear ();
     operator[](index) = value;
 }
 
