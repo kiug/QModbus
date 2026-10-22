@@ -20,11 +20,6 @@ namespace Modbus
     {
         friend class QModbusMaster;
     public:
-        enum bytePosition : quint8 {b1 = 0, b2, b3, b4, b5, b6, b7, b8};
-        typedef unsigned char byteOrder2 [2];
-        typedef unsigned char byteOrder4 [4];
-        typedef unsigned char byteOrder8 [8];
-
         QModbusRegisters (unsigned int address = 0, unsigned int number = 1);
         quint16 getValue (unsigned int index);
         void setValue (unsigned int index, quint16 value);

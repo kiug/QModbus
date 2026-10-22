@@ -23,21 +23,6 @@ namespace Modbus {
         Link = (1<<1),//MODBUS_ERROR_RECOVERY_LINK
         Protocol = (1<<2)//MODBUS_ERROR_RECOVERY_PROTOCOL
     };
-
-    enum modbusException : quint8
-    {
-        IllegalFunction = 0x01,//MODBUS_EXCEPTION_ILLEGAL_FUNCTION, // (1)
-        IllegalDataAddress,// = MODBUS_EXCEPTION_ILLEGAL_DATA_ADDRESS, // (2)
-        IllegalDataValue,// = MODBUS_EXCEPTION_ILLEGAL_DATA_VALUE, // (3)
-        SlaveOrServerFailure,// = MODBUS_EXCEPTION_SLAVE_OR_SERVER_FAILURE, // (4)
-        Acknowledge,// = MODBUS_EXCEPTION_ACKNOWLEDGE, // (5)
-        SlaveOrServerBusy,// = MODBUS_EXCEPTION_SLAVE_OR_SERVER_BUSY, // (6)
-        NegativeAcknowledge,// = MODBUS_EXCEPTION_NEGATIVE_ACKNOWLEDGE, // (7)
-        MemoryParity,// = MODBUS_EXCEPTION_MEMORY_PARITY, // (8)
-        NotDefined,// = MODBUS_EXCEPTION_NOT_DEFINED, // (9)
-        GatewayPath,// = MODBUS_EXCEPTION_GATEWAY_PATH, // (10)
-        GatewayTarget// = MODBUS_EXCEPTION_GATEWAY_TARGET // (11)
-    };
 };
 
 #endif // QMODBUS_H
