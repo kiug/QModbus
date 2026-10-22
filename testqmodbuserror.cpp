@@ -17,3 +17,10 @@ void TestQModbusError::testIsValid ()
     QModbusError modbusError;
     QCOMPARE (modbusError.isValid (), false);
 }
+
+void TestQModbusError::testMessage ()
+{
+    QModbusError modbusError;
+    // Default error code exercises the modbus_strerror branch.
+    QVERIFY (!modbusError.message ().isEmpty ());
+}

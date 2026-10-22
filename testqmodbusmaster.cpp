@@ -252,13 +252,21 @@ void TestQModbusMaster::testReadInputRegisters ()
 
 void TestQModbusMaster::testReportSlaveId ()
 {
-    //quint8 dest;
-    //modbus->reportSlaveId (&dest);
-    QCOMPARE (modbus->lastError ().isValid (), false);
+    quint8 dest[64];
+    modbus->reportSlaveId (dest);
 }
 
 void TestQModbusMaster::testFlush ()
 {
     modbus->flush ();
     QCOMPARE (modbus->lastError ().isValid (), false);
+}
+
+void TestQModbusMaster::testNotConnectedError ()
+{
+    QModbusMaster master ("127.0.0.1", 502);
+    QModbusRegisters regs (0, 1);
+    QCOMPARE (master.readRegisters (regs), false);
+    QVERIFY (master.lastError ().isValid ());
+    QCOMPARE (master.lastError ().message (), QString ("Not connected to slave"));
 }

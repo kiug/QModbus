@@ -247,3 +247,78 @@ void TestQModbusRegisters::testSetFloat64RegisterOrder ()
     QCOMPARE (registers.getValue (10), (quint16)0x0000);
     QCOMPARE (registers.getValue (11), (quint16)0x0000);
 }
+
+void TestQModbusRegisters::testOutOfRange ()
+{
+    QModbusRegisters registers (0, 1);
+    QCOMPARE (registers.getInteger16 (1), (qint16)0);
+    QCOMPARE (registers.getInteger32 (0), (qint32)0);
+    QCOMPARE (registers.getInteger64 (0), (qint64)0);
+    QCOMPARE (registers.getUInteger16 (1), (quint16)0);
+    QCOMPARE (registers.getUInteger32 (0), (quint32)0);
+    QCOMPARE (registers.getUInteger64 (0), (quint64)0);
+    QCOMPARE (registers.getFloat32 (0), (float)0);
+    QCOMPARE (registers.getFloat64 (0), (double)0);
+    registers.setInteger16 (1, 1);
+    registers.setInteger32 (0, 1);
+    registers.setInteger64 (0, 1);
+    registers.setUInteger16 (1, 1);
+    registers.setUInteger32 (0, 1);
+    registers.setUInteger64 (0, 1);
+    registers.setFloat32 (0, 1.0f);
+    registers.setFloat64 (0, 1.0);
+}
+
+void TestQModbusRegisters::testGetHighAndLowByte ()
+{
+    QCOMPARE (QModbusRegisters::getHighByte (0x1234), (quint8)0x12);
+    QCOMPARE (QModbusRegisters::getLowByte (0x1234), (quint8)0x34);
+}
+
+void TestQModbusRegisters::testInt32FromInt16 ()
+{
+    quint16 data[2] = {0x1234, 0x5678};
+    QCOMPARE (QModbusRegisters::getInt32FromInt16 (data, 0), (int)0x12345678);
+}
+
+void TestQModbusRegisters::testInt16ToAndFromInt8 ()
+{
+    quint8 data[2] = {0x12, 0x34};
+    QCOMPARE (QModbusRegisters::getInt16FromInt8 (data, 0), (short int)0x1234);
+
+    quint8 dest[2] = {0, 0};
+    QModbusRegisters::setInt16ToInt8 (dest, 0, 0x1234);
+    QCOMPARE (dest[0], (quint8)0x12);
+    QCOMPARE (dest[1], (quint8)0x34);
+}
+
+void TestQModbusRegisters::testBitsFromByteAndBytes ()
+{
+    quint8 dest[8];
+
+    QModbusRegisters::setBitsFromByte (dest, 0, 0x00);
+    QCOMPARE (dest[0], (quint8)0);
+
+    QModbusRegisters::setBitsFromByte (dest, 0, 0xFF);
+    QCOMPARE (dest[0], (quint8)1);
+    QCOMPARE (dest[7], (quint8)1);
+
+    const quint8 bytes[1] = {0x0F};
+    QModbusRegisters::setBitsFromBytes (dest, 0, 8, bytes);
+    QCOMPARE (dest[0], (quint8)1);
+    QCOMPARE (dest[3], (quint8)1);
+    QCOMPARE (dest[4], (quint8)0);
+
+    QModbusRegisters::getByteFromBits (dest, 0, 8); // returns void; coverage only
+}
+
+void TestQModbusRegisters::testFloatHelpers ()
+{
+    const quint16 src[2] = {0x3F80, 0x0000}; // 1.0f, big-endian
+    QCOMPARE (QModbusRegisters::getFloat (src), 1.0f);
+
+    quint16 dest[2] = {0, 0};
+    QModbusRegisters::setFloat (1.0f, dest);
+    QCOMPARE (dest[0], (quint16)0x3F80);
+    QCOMPARE (dest[1], (quint16)0x0000);
+}

@@ -46,6 +46,13 @@ private slots:
     void testGetFloat32RegisterOrder ();
     void testSetUInteger32RegisterOrder ();
     void testSetFloat64RegisterOrder ();
+    // Out-of-range and helper functions
+    void testOutOfRange ();
+    void testGetHighAndLowByte ();
+    void testInt32FromInt16 ();
+    void testInt16ToAndFromInt8 ();
+    void testBitsFromByteAndBytes ();
+    void testFloatHelpers ();
 };
 
 #endif // TESTQMODBUSREGISTERS_H

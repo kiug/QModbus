@@ -39,6 +39,7 @@ private slots:
 
     void testReportSlaveId ();
     void testFlush ();
+    void testNotConnectedError ();
 
 private:
     Modbus::QModbusMaster * modbus;

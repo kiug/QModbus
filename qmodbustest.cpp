@@ -21,16 +21,17 @@ int main (int argc, char *argv[])
 {
     Q_UNUSED (argc);
     Q_UNUSED (argv);
+    int status = 0;
     TestQModbusBits testQModbusBits;
-    QTest::qExec (&testQModbusBits);
+    status |= QTest::qExec (&testQModbusBits);
     TestQModbusRegisters testQModbusRegisters;
-    QTest::qExec (&testQModbusRegisters);
+    status |= QTest::qExec (&testQModbusRegisters);
     TestQModbusError testQModbusError;
-    QTest::qExec (&testQModbusError);
+    status |= QTest::qExec (&testQModbusError);
     TestQModbusMaster testQModbusMaster;
-    QTest::qExec (&testQModbusMaster);
+    status |= QTest::qExec (&testQModbusMaster);
 
-    return 0;
+    return status;
 }
 
 //QTEST_MAIN(TestQModbusBits);
