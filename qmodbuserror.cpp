@@ -27,7 +27,7 @@ bool QModbusError::isValid () const
     return valid;
 }
 
-QString QModbusError::message ()
+QString QModbusError::message () const
 {
     if (error == OUT_OF_RANGE_ENO) {
         return QString (OUT_OF_RANGE_MSG);

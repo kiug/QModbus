@@ -31,7 +31,7 @@ namespace Modbus
         QModbusError ();
         QModbusError (const QModbusError & other);
         bool isValid () const;
-        QString message ();
+        QString message () const;
     private:
         void set (int errnum);
         void clear ();
