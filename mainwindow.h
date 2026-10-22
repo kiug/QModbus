@@ -25,7 +25,13 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+private slots:
+    void connectToDevice ();
+    void sendQuery ();
+
 private:
+    void addResultRow (int address, const QString &value);
+
     Ui::MainWindow *ui;
     Modbus::QModbusMaster * modbus;
 };
