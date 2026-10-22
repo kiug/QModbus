@@ -20,7 +20,7 @@ coils, discrete inputs, and holding/input registers.
 
 ## Requirements
 
-- Qt 5.12 or later (Core; Widgets/Gui only for the demo GUI, Test only for tests)
+- Qt 5.12 or later (Core; Widgets/Gui only for the GUI app, Test only for tests)
 - libmodbus 3.1.x or later (LGPL-2.1+)
 - A C++11 toolchain (tested with MinGW-w64 7.3)
 
@@ -46,7 +46,7 @@ your machine.
    make        # or mingw32-make / nmake on Windows
    ```
 
-3. Build the demo GUI (optional):
+3. Build the GUI app (optional):
 
    ```sh
    qmake QModbusMasterGUI.pro
