@@ -3,3 +3,22 @@
 *.swp
 build
 .qtcreator
+
+# Qt Creator / qmake build artifacts
+release
+debug
+.qmake.stash
+Makefile
+Makefile.Debug
+Makefile.Release
+*.o
+*.obj
+moc_*.cpp
+moc_*.h
+ui_*.h
+qrc_*.cpp
+
+# Code coverage
+*.gcov
+*.gcno
+*.gcda
