@@ -21,6 +21,6 @@ void TestQModbusError::testIsValid ()
 void TestQModbusError::testMessage ()
 {
     QModbusError modbusError;
-    // Default error code exercises the modbus_strerror branch.
-    QVERIFY (!modbusError.message ().isEmpty ());
+    QVERIFY (!modbusError.isValid ());
+    QVERIFY (modbusError.message ().isEmpty ());
 }
