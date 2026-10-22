@@ -43,7 +43,7 @@
         <string>TCP</string>
        </attribute>
        <layout class="QHBoxLayout" name="tcpHorizontalLayout">
-        <property name="margin">
+        <property name="margin" stdset="0">
          <number>8</number>
         </property>
         <item>
@@ -59,7 +59,7 @@
         <item>
          <widget class="QLineEdit" name="ipOct1LineEdit">
           <property name="inputMask">
-           <string>000; </string>
+           <string>000</string>
           </property>
           <property name="text">
            <string>127</string>
@@ -79,7 +79,7 @@
         <item>
          <widget class="QLineEdit" name="ipOct2LineEdit">
           <property name="inputMask">
-           <string>000; </string>
+           <string>000</string>
           </property>
           <property name="text">
            <string>0</string>
@@ -96,7 +96,7 @@
         <item>
          <widget class="QLineEdit" name="ipOct3LineEdit">
           <property name="inputMask">
-           <string>000; </string>
+           <string>000</string>
           </property>
           <property name="text">
            <string>0</string>
@@ -113,7 +113,7 @@
         <item>
          <widget class="QLineEdit" name="ipOct4LineEdit">
           <property name="inputMask">
-           <string>000; </string>
+           <string>000</string>
           </property>
           <property name="text">
            <string>1</string>
@@ -139,7 +139,7 @@
            </size>
           </property>
           <property name="inputMask">
-           <string>00000; </string>
+           <string>00000</string>
           </property>
           <property name="text">
            <string>502</string>
@@ -151,12 +151,6 @@
         </item>
         <item>
          <widget class="QPushButton" name="tcpConnectPushButton">
-          <property name="maximumSize">
-           <size>
-            <width>64</width>
-            <height>16777215</height>
-           </size>
-          </property>
           <property name="text">
            <string>Connect</string>
           </property>
@@ -169,7 +163,7 @@
         <string>RTU</string>
        </attribute>
        <layout class="QHBoxLayout" name="rtuHorizontalLayout">
-        <property name="margin">
+        <property name="margin" stdset="0">
          <number>8</number>
         </property>
         <item>
@@ -393,7 +387,7 @@
        <string>Query</string>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <property name="margin">
+       <property name="margin" stdset="0">
         <number>8</number>
        </property>
        <item>
@@ -506,12 +500,6 @@
        </item>
        <item>
         <widget class="QPushButton" name="sendQueryPushButton">
-         <property name="maximumSize">
-          <size>
-           <width>64</width>
-           <height>16777215</height>
-          </size>
-         </property>
          <property name="text">
           <string>Send query</string>
          </property>
