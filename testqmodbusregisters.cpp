@@ -206,3 +206,44 @@ void TestQModbusRegisters::testSetAndGetFloat64 ()
     registers.setFloat64 (8, DBL_MAX);
     QCOMPARE (registers.getFloat64 (8), (double)DBL_MAX);
 }
+
+void TestQModbusRegisters::testSetFloat32RegisterOrder ()
+{
+    QModbusRegisters registers (0, 16);
+    registers.setFloat32 (8, 1.0f);
+    QCOMPARE (registers.getValue (8), (quint16)0x3F80);
+    QCOMPARE (registers.getValue (9), (quint16)0x0000);
+    registers.setFloat32 (8, 20.1f);
+    QCOMPARE (registers.getValue (8), (quint16)0x41A0);
+    QCOMPARE (registers.getValue (9), (quint16)0xCCCD);
+}
+
+void TestQModbusRegisters::testGetFloat32RegisterOrder ()
+{
+    QModbusRegisters registers (0, 16);
+    registers.setValue (8, 0x3F80);
+    registers.setValue (9, 0x0000);
+    QCOMPARE (registers.getFloat32 (8), 1.0f);
+    registers.setValue (8, 0x41A0);
+    registers.setValue (9, 0xCCCD);
+    QCOMPARE (registers.getFloat32 (8), 20.1f);
+}
+
+void TestQModbusRegisters::testSetUInteger32RegisterOrder ()
+{
+    QModbusRegisters registers (0, 16);
+    registers.setUInteger32 (8, 0x12345678U);
+    QCOMPARE (registers.getValue (8), (quint16)0x1234);
+    QCOMPARE (registers.getValue (9), (quint16)0x5678);
+    QCOMPARE (registers.getUInteger32 (8), (quint32)0x12345678U);
+}
+
+void TestQModbusRegisters::testSetFloat64RegisterOrder ()
+{
+    QModbusRegisters registers (0, 12);
+    registers.setFloat64 (8, 1.0);
+    QCOMPARE (registers.getValue (8), (quint16)0x3FF0);
+    QCOMPARE (registers.getValue (9), (quint16)0x0000);
+    QCOMPARE (registers.getValue (10), (quint16)0x0000);
+    QCOMPARE (registers.getValue (11), (quint16)0x0000);
+}

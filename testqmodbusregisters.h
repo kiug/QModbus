@@ -41,6 +41,11 @@ private slots:
     void testGetFloat64 ();
     void testSetAndGetFloat32 ();
     void testSetAndGetFloat64 ();
+    // Register byte/word order (big-endian)
+    void testSetFloat32RegisterOrder ();
+    void testGetFloat32RegisterOrder ();
+    void testSetUInteger32RegisterOrder ();
+    void testSetFloat64RegisterOrder ();
 };
 
 #endif // TESTQMODBUSREGISTERS_H
