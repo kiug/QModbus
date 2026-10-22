@@ -317,7 +317,7 @@ void TestQModbusRegisters::testBitsFromByteAndBytes ()
     QCOMPARE (dest[3], (quint8)1);
     QCOMPARE (dest[4], (quint8)0);
 
-    QModbusRegisters::getByteFromBits (dest, 0, 8); // returns void; coverage only
+    QCOMPARE (QModbusRegisters::getByteFromBits (dest, 0, 8), (quint8)0x0F);
 }
 
 void TestQModbusRegisters::testFloatHelpers ()

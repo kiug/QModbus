@@ -305,9 +305,9 @@ void QModbusRegisters::setBitsFromBytes (quint8 *dest, int index, unsigned int n
     modbus_set_bits_from_bytes (dest, index, nb_bits, tab_byte);
 }
 
-void QModbusRegisters::getByteFromBits (const quint8 *src, int index, unsigned int nb_bits)
+quint8 QModbusRegisters::getByteFromBits (const quint8 *src, int index, unsigned int nb_bits)
 {
-    modbus_get_byte_from_bits (src, index, nb_bits);
+    return modbus_get_byte_from_bits (src, index, nb_bits);
 }
 
 float QModbusRegisters::getFloat(const quint16 *src)

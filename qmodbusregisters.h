@@ -65,7 +65,7 @@ namespace Modbus
         // Functions for data manipulation
         static void setBitsFromByte (quint8 *dest, int index, const quint8 value);
         static void setBitsFromBytes (quint8 *dest, int index, unsigned int nb_bits, const quint8 *tab_byte);
-        static void getByteFromBits (const quint8 *src, int index, unsigned int nb_bits);
+        static quint8 getByteFromBits (const quint8 *src, int index, unsigned int nb_bits);
         static float getFloat (const quint16 *src);
         static void setFloat (float value, quint16 *dest);
 
