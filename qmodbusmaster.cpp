@@ -42,12 +42,12 @@ QModbusMaster::~QModbusMaster ()
 
 bool QModbusMaster::setSlave (int slave)
 {
-    return checkOperationsReturnValue( modbus_set_slave ((modbus_t *) ctx, slave) != 0 );
+    return checkOperationsReturnValue( modbus_set_slave ((modbus_t *) ctx, slave) );
 }
 
 bool QModbusMaster::setBroadcast ()
 {
-    return checkOperationsReturnValue( modbus_set_slave((modbus_t *) ctx, MODBUS_BROADCAST_ADDRESS) != 0 );
+    return checkOperationsReturnValue( modbus_set_slave((modbus_t *) ctx, MODBUS_BROADCAST_ADDRESS) );
 }
 
 bool QModbusMaster::connect ()
@@ -60,27 +60,28 @@ bool QModbusMaster::connect ()
 void QModbusMaster::close()
 {
     modbus_close ((modbus_t *) ctx);
+    connected = false;
     modbusError.clear ();
 }
 
 bool QModbusMaster::flush ()
 {
-    return checkOperationsReturnValue( modbus_flush ((modbus_t *) ctx) != 0 );
+    return checkOperationsReturnValue( modbus_flush ((modbus_t *) ctx) );
 }
 
 bool QModbusMaster::getByteTimeout (uint32_t *sec, uint32_t *usec)
 {
-    return checkOperationsReturnValue( modbus_get_byte_timeout ((modbus_t *) ctx, sec, usec) != 0 );
+    return checkOperationsReturnValue( modbus_get_byte_timeout ((modbus_t *) ctx, sec, usec) );
 }
 
 bool QModbusMaster::setByteTimeout (uint32_t sec, uint32_t usec)
 {
-    return checkOperationsReturnValue( modbus_set_byte_timeout ((modbus_t *) ctx, sec, usec) != 0 );
+    return checkOperationsReturnValue( modbus_set_byte_timeout ((modbus_t *) ctx, sec, usec) );
 }
 
 bool QModbusMaster::setDebug (bool debug)
 {
-    return checkOperationsReturnValue( modbus_set_debug ((modbus_t *) ctx, (int)debug) != 0 );
+    return checkOperationsReturnValue( modbus_set_debug ((modbus_t *) ctx, (int)debug) );
 }
 
 bool QModbusMaster::setErrorRecovery(errorRecoveryMode errorRecovery)
