@@ -29,7 +29,6 @@ namespace Modbus
         friend class QModbusRegisters;
     public:
         QModbusError ();
-        QModbusError (const QModbusError & other);
         bool isValid () const;
         QString message () const;
     private:

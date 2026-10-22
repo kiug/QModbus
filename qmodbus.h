@@ -17,14 +17,14 @@
 #endif
 
 namespace Modbus {
-    typedef enum
+    enum errorRecoveryMode : quint8
     {
         None = 0,//MODBUS_ERROR_RECOVERY_NONE
         Link = (1<<1),//MODBUS_ERROR_RECOVERY_LINK
         Protocol = (1<<2)//MODBUS_ERROR_RECOVERY_PROTOCOL
-    } errorRecoveryMode;
+    };
 
-    typedef enum
+    enum modbusException : quint8
     {
         IllegalFunction = 0x01,//MODBUS_EXCEPTION_ILLEGAL_FUNCTION, // (1)
         IllegalDataAddress,// = MODBUS_EXCEPTION_ILLEGAL_DATA_ADDRESS, // (2)
@@ -37,7 +37,7 @@ namespace Modbus {
         NotDefined,// = MODBUS_EXCEPTION_NOT_DEFINED, // (9)
         GatewayPath,// = MODBUS_EXCEPTION_GATEWAY_PATH, // (10)
         GatewayTarget// = MODBUS_EXCEPTION_GATEWAY_TARGET // (11)
-    } modbusException;
+    };
 };
 
 #endif // QMODBUS_H
