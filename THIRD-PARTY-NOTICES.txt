@@ -1,0 +1,31 @@
+Third-party notices
+===================
+
+This project (QModbus) is licensed under the GNU Lesser General Public
+License, version 3 or later (LGPL-3.0-or-later). See LICENSE.txt.
+
+It depends on the following third-party components. Their license texts
+are included in the `licenses/` directory.
+
+libmodbus
+---------
+Version: 3.1.10 / 3.2.0
+License: GNU Lesser General Public License v2.1 or later (LGPL-2.1-or-later)
+Copyright: Copyright (C) Stéphane Raimbault <stephane.raimbault@gmail.com>
+           and contributors (see AUTHORS in the libmodbus distribution)
+License text: licenses/libmodbus-LGPL-2.1.txt
+Homepage: https://libmodbus.org/
+
+Qt
+--
+Version: 5.12.12 (open-source edition)
+License: GNU Lesser General Public License v3 (LGPL-3.0) and, for some
+         components, GNU General Public License v3 (GPL-3.0)
+Copyright: Copyright (C) 2017 The Qt Company Ltd.
+License text: licenses/Qt-LICENSE.txt
+Homepage: https://www.qt.io/
+
+Windows Sockets (ws2_32)
+------------------------
+System library provided by Microsoft Windows. No third-party license or
+attribution notice required.
