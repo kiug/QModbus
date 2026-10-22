@@ -54,3 +54,10 @@ void TestQModbusBits::testSetAndGetAddress ()
     bits.setAddress (16);
     QCOMPARE (bits.getAddress (), (unsigned int)16);
 }
+
+void TestQModbusBits::testOutOfRange ()
+{
+    Modbus::QModbusBits bits (0, 1);
+    QCOMPARE (bits.getValue (1), false);
+    bits.setValue (1, true); // must not crash
+}

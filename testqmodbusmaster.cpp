@@ -253,7 +253,8 @@ void TestQModbusMaster::testReadInputRegisters ()
 void TestQModbusMaster::testReportSlaveId ()
 {
     quint8 dest[64];
-    modbus->reportSlaveId (dest);
+    const bool result = modbus->reportSlaveId (dest, sizeof (dest));
+    Q_UNUSED (result); // server may not support report-slave-id; just exercise the path
 }
 
 void TestQModbusMaster::testFlush ()

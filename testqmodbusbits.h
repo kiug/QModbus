@@ -20,6 +20,7 @@ private slots:
     void testSetAndGetValue ();
     void testSetAndGetNumber ();
     void testSetAndGetAddress ();
+    void testOutOfRange ();
 };
 
 #endif // TESTQMODBUSBITS_H

@@ -267,6 +267,9 @@ void TestQModbusRegisters::testOutOfRange ()
     registers.setUInteger64 (0, 1);
     registers.setFloat32 (0, 1.0f);
     registers.setFloat64 (0, 1.0);
+    QCOMPARE (registers.getValue (1), (quint16)0);
+    QCOMPARE (registers.getBitString (1), QString ());
+    registers.setValue (1, 0xFFFF);
 }
 
 void TestQModbusRegisters::testGetHighAndLowByte ()
