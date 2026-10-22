@@ -68,24 +68,20 @@ qint16 QModbusRegisters::getInteger16 (unsigned int index)
 {
     if (size () <= (int)index) {
         modbusError.set (OUT_OF_RANGE_ENO);
+        return 0;
     }
-    else {
-        modbusError.clear();
-    }
-    qint16 value = 0;
-    ((quint16 *) &value)[0] = at (index);
-    return value;
+    modbusError.clear();
+    return static_cast<qint16> (at (index));
 }
 
 void QModbusRegisters::setInteger16 (unsigned int index, qint16 value)
 {
     if (size () <= (int)index) {
         modbusError.set (OUT_OF_RANGE_ENO);
+        return;
     }
-    else {
-        modbusError.clear();
-    }
-    operator [] (index) = ((quint16 *) &value)[0];
+    modbusError.clear();
+    operator [] (index) = static_cast<quint16> (value);
 }
 
 qint32 QModbusRegisters::getInteger32 (unsigned int index)
@@ -144,24 +140,20 @@ quint16 QModbusRegisters::getUInteger16 (unsigned int index)
 {
     if (size () <= (int)index) {
         modbusError.set (OUT_OF_RANGE_ENO);
+        return 0;
     }
-    else {
-        modbusError.clear ();
-    }
-    quint16 value = 0;
-    ((quint16 *) &value)[0] = at (index);
-    return value;
+    modbusError.clear ();
+    return at (index);
 }
 
 void QModbusRegisters::setUInteger16 (unsigned int index, quint16 value)
 {
     if (size () <= (int)index) {
         modbusError.set (OUT_OF_RANGE_ENO);
+        return;
     }
-    else {
-        modbusError.clear ();
-    }
-    operator [] (index) = ((quint16 *) &value)[0];
+    modbusError.clear ();
+    operator [] (index) = value;
 }
 
 quint32 QModbusRegisters::getUInteger32 (unsigned int index)
