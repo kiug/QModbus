@@ -40,6 +40,9 @@ private slots:
     void testReportSlaveId ();
     void testFlush ();
     void testNotConnectedError ();
+    void testRtuAndTcpPiConstructors ();
+    void testContextSettings ();
+    void testConnectionError ();
 
 private:
     Modbus::QModbusMaster * modbus;

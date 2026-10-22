@@ -271,3 +271,35 @@ void TestQModbusMaster::testNotConnectedError ()
     QVERIFY (master.lastError ().isValid ());
     QCOMPARE (master.lastError ().message (), QString ("Not connected to slave"));
 }
+
+void TestQModbusMaster::testRtuAndTcpPiConstructors ()
+{
+    QModbusMaster rtu ("COM1", 9600, 'N', 8, 1);
+    QVERIFY (!rtu.lastError ().isValid ());
+
+    QModbusMaster tcpPi ("localhost", "502");
+    QVERIFY (!tcpPi.lastError ().isValid ());
+}
+
+void TestQModbusMaster::testContextSettings ()
+{
+    QModbusMaster master ("127.0.0.1", 502);
+    uint32_t sec = 0;
+    uint32_t usec = 0;
+
+    QVERIFY (master.setByteTimeout (0, 500000));
+    QVERIFY (master.getByteTimeout (&sec, &usec));
+    QVERIFY (master.setResponseTimeout (1, 0));
+    QVERIFY (master.getResponseTimeout (&sec, &usec));
+    QVERIFY (master.setErrorRecovery (Modbus::Link));
+    QVERIFY (master.setDebug (true));
+    QCOMPARE (master.getHeaderLength (), 7);
+}
+
+void TestQModbusMaster::testConnectionError ()
+{
+    QModbusMaster master ("127.0.0.1", 1);
+    QCOMPARE (master.connect (), false);
+    QVERIFY (master.lastError ().isValid ());
+    QVERIFY (!master.lastError ().message ().isEmpty ());
+}
