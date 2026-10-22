@@ -303,10 +303,16 @@ void QModbusRegisters::getByteFromBits (const quint8 *src, int index, unsigned i
 
 float QModbusRegisters::getFloat(const quint16 *src)
 {
-    return modbus_get_float (src);
+    const quint32 bits = (quint32 (src[0]) << 16) | src[1];
+    float value;
+    memcpy (&value, &bits, sizeof (value));
+    return value;
 }
 
 void QModbusRegisters::setFloat (float value, quint16 *dest)
 {
-    modbus_set_float (value, dest);
+    quint32 bits;
+    memcpy (&bits, &value, sizeof (bits));
+    dest[0] = static_cast<quint16> (bits >> 16);
+    dest[1] = static_cast<quint16> (bits);
 }
