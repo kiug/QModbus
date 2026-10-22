@@ -4,10 +4,4 @@ LIB_DIR = "D:/Qt/Lib/libmodbus-3.2.0"
 
 INCLUDEPATH += $${LIB_DIR}/include
 LIBS += -L$${LIB_DIR}/lib
-
-CONFIG(debug, debug|release) {
-    LIBS += -lmodbus -lws2_32
-}
-else {
-    LIBS += -lmodbus -lws2_32
-}
+LIBS += -lmodbus -lws2_32
